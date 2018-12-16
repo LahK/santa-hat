@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<view class="container">
+  <div class="snow">
+    <div class="snow-wrapper">
+      <div class="snow-item"></div>
+    </div>
+    <div class="snow-wrapper">
+      <div class="snow-item"></div>
+    </div>
+    <div class="snow-wrapper">
+      <div class="snow-item"></div>
+    </div>
+  </div>
+  <div class="auth-button-container">
+    <button wx:if="{{!authed}}" class="button auth-button {{checkingAuth ? 'disabled' : ''}}" disabled="{{authed === undefined}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权获取头像昵称 </button>
+    <view wx:else class="button auth-button" bindtap="navigateToEditor"> 获取圣诞小帽 </view>
+    <image class="santa-hat" src="../../assets/santa-hat.png" />
+  </div>
+</view>

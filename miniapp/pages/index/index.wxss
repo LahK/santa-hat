@@ -1,0 +1,124 @@
+/**index.wxss**/
+.container {
+  background-color:#243253;
+  width: 100vw;
+  height: 100vh;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+.button:hover:not(.disabled) {
+  background-color: #d30504;
+  box-shadow: 0px 15px 20px rgba(211, 5, 4, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.button.disabled {
+  color: rgba(255, 255, 255, 0.26);
+  background-color: rgba(255, 255, 255, 0.12);
+  cursor: not-allowed;
+}
+
+.auth-button-container {
+  position: absolute;
+  bottom: 90px;
+}
+
+.santa-hat {
+  position: absolute;
+  top: -18px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  transform: rotateZ(30deg);
+  transition: all 0.3s ease 0s;
+}
+
+.auth-button:hover:not(.disabled) + .santa-hat {
+  transform: translateY(-7px) rotateZ(30deg);
+}
+
+
+/* Snow */
+div.snow,
+div.snow .snow-wrapper,
+div.snow .snow-item {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-size: cover;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+div.snow .snow-wrapper {
+  overflow: hidden;
+  left: -100px;
+  right: -100px;
+  perspective: 100px;
+  margin: 0;
+}
+div.snow .snow-item {
+  display: block;
+  height: 2000px;
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/299775/snow-sparse-flipped.png);
+  animation: s 10s linear infinite;
+  background-size: auto;
+}
+div.snow .snow-wrapper{
+  animation: sw 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite alternate;
+    transform: translateX(-50px);
+}
+div.snow .snow-wrapper:nth-of-type(1) .snow-item {
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/299775/snow-dense.png);
+    animation-duration: 11s;
+}
+
+div.snow .snow-wrapper:nth-of-type(3) .snow-item { 
+  animation-duration: 5s;
+  transform: translateZ(70px);
+  animation-name: sC;
+}
+
+div.snow .snow-wrapper:nth-of-type(1) {
+  animation-duration: 10s;
+}
+
+@keyframes sw {
+  to {
+    transform: translateX(50px);
+  }
+}
+
+@keyframes sC {
+  0% {
+    transform: translateY(-1000px) translateZ(70px);
+  }
+}
+
+@keyframes s {
+  0% {
+    transform: translateY(-1000px);
+  }
+}

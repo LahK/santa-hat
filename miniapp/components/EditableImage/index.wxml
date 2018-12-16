@@ -1,0 +1,4 @@
+<!--components/EditableImage/index.wxml-->
+<div style="width: {{imageSize.width}}px; height: {{imageSize.height}}px;">
+  <image src="{{src}}" style="width: {{imageSize.width}}px; height: {{imageSize.height}}px;" bindload="onImageLoad" />
+</div>

@@ -1,0 +1,17 @@
+/* pages/editor/index.wxss */
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f6f7f6;
+
+  display: flex;
+  justify-content: flex-start;
+}
+canvas {
+  width: 80vw;
+  height: 80vw;
+  margin: 10vw;
+}
+.userinfo-avatar {
+  width: 100%;
+}
