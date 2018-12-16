@@ -41,7 +41,6 @@ Page({
       this.setData({
         authed: true,
       })
-      this.navigateToEditor()
     } else {
       this.setData({
         authed: false,

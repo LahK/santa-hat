@@ -1,6 +1,6 @@
 <!--pages/editor/index.wxml-->
 <div class="container">
-  <!-- <div class="canvas">
+  <div class="canvas">
     <!-- <image
       class="userinfo-avatar"
       src="../../assets/test.jpg"
@@ -9,7 +9,8 @@
       ontouchstart="onTouchStart"
       ontouchmove="onTouchMove"
     /> -->
-    <!-- <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" bindload="onImageLoad" mode="cover"></image> -->
-  <!-- </div> -->
-  <canvas canvas-id="lahk"></canvas>
+    <image class="avatar" src="{{userInfo.avatarUrl}}" bindload="onImageLoad" mode="cover"></image>
+    <EditableImage src="../../assets/santa-hat.png"/>
+  </div>
+  <!-- <canvas canvas-id="lahk"></canvas> -->
 </div>

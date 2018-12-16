@@ -7,11 +7,22 @@
   display: flex;
   justify-content: flex-start;
 }
-canvas {
+canvas, .canvas {
   width: 80vw;
   height: 80vw;
   margin: 10vw;
 }
-.userinfo-avatar {
+.canvas {
+  position: relative;
+  overflow: hidden;
+}
+.avatar {
   width: 100%;
+}
+.santa-hat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
 }

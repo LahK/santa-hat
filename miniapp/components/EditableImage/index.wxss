@@ -1,1 +1,50 @@
 /* components/EditableImage/index.wxss */
+.container {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.image {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.resize {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border: 2px solid #6397ec;
+}
+.resize.nw {
+  cursor: nw-resize;
+  border-right-width: 0;
+  border-bottom-width: 0;
+
+  left: 0px;
+  top: 0px;
+}
+.resize.ne {
+  cursor: ne-resize;
+  border-left-width: 0;
+  border-bottom-width: 0;
+
+  right: 0px;
+  top: 0px;
+}
+.resize.sw {
+  cursor: sw-resize;
+  border-right-width: 0;
+  border-top-width: 0;
+
+  left: 0px;
+  bottom: 0px;
+}
+.resize.se {
+  cursor: se-resize;
+  border-left-width: 0;
+  border-top-width: 0;
+
+  right: 0px;
+  bottom: 0px;
+}

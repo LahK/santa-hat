@@ -1,1 +1,5 @@
-{}
+{
+  "usingComponents": {
+    "EditableImage": "../../components/EditableImage/index"
+  }
+}
