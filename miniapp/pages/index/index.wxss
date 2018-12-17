@@ -1,6 +1,6 @@
 /**index.wxss**/
 .container {
-  background-color:#243253;
+  background-color:#BEDBFF;
   width: 100vw;
   height: 100vh;
 }
@@ -58,67 +58,30 @@
   transform: translateY(-7px) rotateZ(30deg);
 }
 
-
-/* Snow */
-div.snow,
-div.snow .snow-wrapper,
-div.snow .snow-item {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  background-size: cover;
-  left: 0;
-  right: 0;
-  pointer-events: none;
+/* canvas */
+canvas, .canvas {
+  width: 60vw;
+  height: 60vw;
+  margin: 20vw;
 }
-
-div.snow .snow-wrapper {
+.canvas {
+  position: relative;
   overflow: hidden;
-  left: -100px;
-  right: -100px;
-  perspective: 100px;
-  margin: 0;
 }
-div.snow .snow-item {
-  display: block;
-  height: 2000px;
-  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/299775/snow-sparse-flipped.png);
-  animation: s 10s linear infinite;
-  background-size: auto;
-}
-div.snow .snow-wrapper{
-  animation: sw 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite alternate;
-    transform: translateX(-50px);
-}
-div.snow .snow-wrapper:nth-of-type(1) .snow-item {
-  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/299775/snow-dense.png);
-    animation-duration: 11s;
+.avatar {
+  width: 100%;
+  height: 100%;
 }
 
-div.snow .snow-wrapper:nth-of-type(3) .snow-item { 
-  animation-duration: 5s;
-  transform: translateZ(70px);
-  animation-name: sC;
-}
+.title {
+  position: absolute;
+  bottom: 0;
+  margin: 2em 0;
 
-div.snow .snow-wrapper:nth-of-type(1) {
-  animation-duration: 10s;
-}
-
-@keyframes sw {
-  to {
-    transform: translateX(50px);
-  }
-}
-
-@keyframes sC {
-  0% {
-    transform: translateY(-1000px) translateZ(70px);
-  }
-}
-
-@keyframes s {
-  0% {
-    transform: translateY(-1000px);
-  }
+  color: white;
+  text-align: center;
+  font-family: "Cursive Sans";
+  font-size: 13px;
+  /* letter-spacing: 2.5px; */
+  text-shadow: rgba(0, 0, 0, 0.1) 11.23px 2.00833px;
 }

@@ -20,7 +20,9 @@ Page({
     },
     touch: {
 
-    }
+    },
+    availableHats: Array.from({ length: 14 }, (v, k) => k + 1),
+    hats: [],
   },
 
   /**
@@ -30,14 +32,14 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo,
     })
-    wx.getImageInfo({
-      src: app.globalData.userInfo.avatarUrl,
-      success: (res) => {
-        const ctx = wx.createCanvasContext('lahk')
-        ctx.drawImage(res.path, 0, 0, this.data.canvas.width, this.data.canvas.height)
-        ctx.draw()
-      },
-    })
+    // wx.getImageInfo({
+    //   src: app.globalData.userInfo.avatarUrl,
+    //   success: (res) => {
+    //     const ctx = wx.createCanvasContext('lahk')
+    //     ctx.drawImage(res.path, 0, 0, this.data.canvas.width, this.data.canvas.height)
+    //     ctx.draw()
+    //   },
+    // })
   },
 
   /**
@@ -122,5 +124,11 @@ Page({
   },
   onTouchMove: function (e) {
     console.log(e)
+  },
+  onTapItem: function(e) {
+    const { number } = e.currentTarget.dataset
+    this.setData({
+      hats: [...this.data.hats, number],
+    })
   },
 })

@@ -1,5 +1,8 @@
 {
   "usingComponents": {
-    "EditableImage": "../../components/EditableImage/index"
-  }
+    "EditableImage": "../../components/EditableImage/index",
+    "Snow": "../../components/Snow/index",
+    "Card": "../../components/Card/index"
+  },
+  "disableScroll": true
 }

@@ -11,7 +11,7 @@ Component({
     },
     defaultWidth: {
       type: Number,
-      value: 45,
+      value: 75,
     },
   },
 
@@ -46,8 +46,6 @@ Component({
       })
     },
     onTouchStart: function ({ target, touches }) {
-      const { type } = target.dataset
-
       const { offset: { x, y }, size: { width, height }, angle } = this.data
       this.setData({
         touchStart: {
@@ -61,74 +59,24 @@ Component({
       })
     },
     onTouchMove: function ({ target, touches }) {
-      const { type } = target.dataset
-
+      const { touchStart: { touches: _touches, offsetX, offsetY, width, height, angle } } = this.data
       if (touches.length === 1) {
         const touch = touches[0]
-        const { touchStart: { touches: _touches, offsetX, offsetY, width, height } } = this.data
         const { pageX, pageY } = _touches[0]
+
         const movement = {
           x: touch.pageX - pageX,
           y: touch.pageY - pageY,
         }
 
-        if (type === 'image') {
-          this.setData({
-            offset: {
-              x: offsetX + movement.x,
-              y: offsetY + movement.y,
-            },
-          })
-        } else if (type.startsWith('resize-')) {
-          if (type === 'resize-nw') {
-            this.setData({
-              offset: {
-                x: offsetX + movement.x,
-                y: offsetY + movement.y,
-              },
-              size: {
-                width: width - movement.x,
-                height: height - movement.y,
-              },
-            })
-          } else if (type === 'resize-ne') {
-            this.setData({
-              offset: {
-                x: offsetX,
-                y: offsetY + movement.y,
-              },
-              size: {
-                width: width + movement.x,
-                height: height - movement.y,
-              },
-            })
-          } else if (type === 'resize-sw') {
-            this.setData({
-              offset: {
-                x: offsetX + movement.x,
-                y: offsetY,
-              },
-              size: {
-                width: width - movement.x,
-                height: height + movement.y,
-              },
-            })
-          } else if (type === 'resize-se') {
-            this.setData({
-              offset: {
-                x: offsetX,
-                y: offsetY,
-              },
-              size: {
-                width: width + movement.x,
-                height: height + movement.y,
-              },
-            })
-          }
-        }
+        this.setData({
+          offset: {
+            x: offsetX + movement.x,
+            y: offsetY + movement.y,
+          },
+        })
       } else if (touches.length === 2) {
-        const { touchStart: { touches: _touches, offsetX, offsetY, width, height } } = this.data
-        const degree_angle = this.calculateAngle(
+        const points = [
           {
             x: _touches[0].pageX,
             y: _touches[0].pageY,
@@ -145,19 +93,31 @@ Component({
             x: touches[1].pageX,
             y: touches[1].pageY,
           },
-        )
+        ]
+
+        const degree_angle = this.calcAngle(...points)
+        const scale = this.calcScale(...points)
 
         this.setData({
-          angle: degree_angle,
+          angle: angle + degree_angle,
+          size: {
+            width: width * scale,
+            height: height * scale,
+          },
+          offset: {
+            x: offsetX - (width * scale - width) / 2,
+            y: offsetY - (height * scale - height) / 2,
+          },
         })
       }
     },
     onTouchEnd: function (e) {
+      console.log(e)
       this.setData({
         touchStart: null,
       })
     },
-    calculateAngle: function (a1, a2, b1, b2) {
+    calcAngle: function (a1, a2, b1, b2) {
       const dAx = a2.x - a1.x;
       const dAy = a2.y - a1.y;
       const dBx = b2.x - b1.x;
@@ -165,6 +125,22 @@ Component({
       let angle = Math.atan2(dAx * dBy - dAy * dBx, dAx * dBx + dAy * dBy);
       const degree_angle = angle * (180 / Math.PI);
       return degree_angle
-    }
+    },
+    calcScale: function (a1, a2, b1, b2) {
+      function calcLength(p1, p2) {
+        return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
+      }
+
+      return calcLength(b1, b2) / calcLength(a1, a2)
+    },
+    catchOnTouchStart: function () {
+      return
+    },
+    catchOnTouchMove: function () {
+      return
+    },
+    catchOnTouchEnd: function () {
+      return
+    },
   }
 })

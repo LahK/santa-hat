@@ -1,16 +1,36 @@
 <!--pages/editor/index.wxml-->
 <div class="container">
-  <div class="canvas">
-    <!-- <image
-      class="userinfo-avatar"
-      src="../../assets/test.jpg"
-      style="width: {{avatar.width}}px; height: {{avatar.height}}px;"
-      bindload="onImageLoad"
-      ontouchstart="onTouchStart"
-      ontouchmove="onTouchMove"
-    /> -->
-    <image class="avatar" src="{{userInfo.avatarUrl}}" bindload="onImageLoad" mode="cover"></image>
-    <EditableImage src="../../assets/santa-hat.png"/>
+  <Snow />
+  <view class="editor ">
+    <image class="avatar" src="{{userInfo.avatarUrl}}" bindload="onImageLoad" />
+    <EditableImage wx:for="{{hats}}" wx:for-item="number" src="../../assets/hat/{{number}}.png"/>
+  </view>
+  <div>
+    <view class="button auth-button" bindtap=""> 保存 </view>
   </div>
+  <div class="picker">
+    <text>选择你的圣诞小帽：</text>
+    <div class="list">
+      <div class="item" wx:for="{{availableHats}}" wx:for-item="number" wx:key="index" bindtap="onTapItem" data-number="{{number}}">
+        <image src="../../assets/hat/{{number}}.png" />
+      </div>
+    </div>
+  </div>
+  <!-- <Card>
+    <text slot="footer">Select your santa hat!</text>
+  </Card> -->
+  <!-- <div class="canvas">
+    <image class="avatar" src="{{userInfo.avatarUrl}}" bindload="onImageLoad" />
+    <EditableImage src="../../assets/santa-hat.png"/>
+  </div> -->
   <!-- <canvas canvas-id="lahk"></canvas> -->
 </div>
+
+<!-- <image
+  class="userinfo-avatar"
+  src="../../assets/test.jpg"
+  style="width: {{avatar.width}}px; height: {{avatar.height}}px;"
+  bindload="onImageLoad"
+  ontouchstart="onTouchStart"
+  ontouchmove="onTouchMove"
+/> -->

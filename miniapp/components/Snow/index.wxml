@@ -1,0 +1,12 @@
+<!--components/Snow/index.wxml-->
+<div class="snow">
+  <div class="snow-wrapper">
+    <div class="snow-item"></div>
+  </div>
+  <div class="snow-wrapper">
+    <div class="snow-item"></div>
+  </div>
+  <div class="snow-wrapper">
+    <div class="snow-item"></div>
+  </div>
+</div>

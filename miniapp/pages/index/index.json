@@ -1,1 +1,6 @@
-{}
+{
+  "usingComponents": {
+    "Snow": "../../components/Snow/index"
+  },
+  "disableScroll": true
+}

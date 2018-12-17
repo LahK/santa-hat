@@ -1,0 +1,16 @@
+/* components/Card/index.wxss */
+.container {
+  background-color: white;
+  box-shadow: 0 0.25em 2em rgba(21,57,57,0.125);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+ border-bottom: 0.25em solid #FB5957;
+}
+
+.footer {
+  padding: 0.75em 1em 1em;
+}
