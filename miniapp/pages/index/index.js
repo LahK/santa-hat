@@ -23,9 +23,6 @@ Page({
     am.singer = '手嶌葵'
     // am.coverImgUrl = ''
     am.src = 'https://raw.githubusercontent.com/cheng-kang/notepad/master/image-bed/UNTITLED_DISC.mp3'
-    am.pause()
-    am.seek(60)
-    am.play()
   },
   onShow: function () {
     wx.getSetting({
