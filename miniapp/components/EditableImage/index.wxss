@@ -3,6 +3,12 @@
   position: absolute;
   left: 0;
   right: 0;
+
+  /* outline: 1rpx solid rgba(0, 0, 0, 0.2); */
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+.container.no-control {
+  border-color: transparent;
 }
 .image {
   position: absolute;
@@ -10,7 +16,32 @@
   right: 0;
 }
 
+.icon {
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+  padding: 4rpx;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.container.no-control .icon {
+  display: none;
+}
+.close {
+  top: -12rpx;
+  left: -12rpx;
+}
+.rotate {
+  top: -12rpx;
+  right: -12rpx;
+}
 .resize {
+  bottom: -12rpx;
+  right: -12rpx;
+}
+
+/* .resize {
   position: absolute;
   width: 5px;
   height: 5px;
@@ -47,4 +78,4 @@
 
   right: 0px;
   bottom: 0px;
-}
+} */

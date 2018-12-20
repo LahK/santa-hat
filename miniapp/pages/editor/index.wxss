@@ -2,23 +2,12 @@
 .container {
   width: 100vw;
   height: 100vh;
-  background-color: #BEDBFF;
+  background-color: #D9EBFF;
+  /* background-color: #BEDBFF; */
   /* background-color:#AF3B49; */
 
   display: flex;
   justify-content: space-between;
-}
-canvas, .canvas {
-  width: 60vw;
-  height: 60vw;
-  margin: 20vw;
-}
-.canvas {
-  position: relative;
-  overflow: hidden;
-  padding: 3px;
-  border: 2px solid white;
-  background-color: rgba(0, 0, 0, 0.2);
 }
 .santa-hat {
   position: absolute;
@@ -26,10 +15,6 @@ canvas, .canvas {
   left: 0;
   width: 30px;
   height: 30px;
-}
-
-.picker {
-  height: 120px;
 }
 
 .card {
@@ -144,4 +129,12 @@ canvas, .canvas {
   height: 30px;
 
   border-radius: 30px;
+}
+
+#lahk {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }

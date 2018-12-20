@@ -1,5 +1,16 @@
 // components/EditableImage/index.js
 
+const debounce = (fn, time = 300) => {
+  let timeout;
+
+  return function () {
+    const functionCall = () => fn.apply(this, arguments);
+
+    clearTimeout(timeout);
+    timeout = setTimeout(functionCall, time);
+  }
+}
+
 Component({
   /**
    * Component properties
@@ -13,12 +24,24 @@ Component({
       type: Number,
       value: 75,
     },
+    editorOffset: {
+      type: Object,
+      value: {
+        x: 0,
+        y: 0,
+      },
+    },
+    onChange: {
+      type: Function,
+      value: () => {},
+    },
   },
 
   /**
    * Component initial data
    */
   data: {
+    isControlDisplaying: true,
     size: {
       width: 0,
       height: 0,
@@ -30,11 +53,29 @@ Component({
     angle: 0,
     touchStart: null, 
   },
+  ready() {
+    this.onChange()
+  },
 
   /**
    * Component methods
    */
   methods: {
+    toggleControlDisplay: function() {
+      this.setData({
+        isControlDisplaying: !this.data.isControlDisplaying,
+      })
+    },
+    onChange: debounce(function () {
+      this.triggerEvent('onchange', {
+        size: this.data.size,
+        offset: this.data.offset,
+        angle: this.data.angle,
+      })
+    }),
+    onRemove: function(e) {
+      this.triggerEvent('onremove')
+    },
     onImageLoad: function (e) {
       const width = this.properties.defaultWidth
       const height = width * e.detail.height / e.detail.width
@@ -45,7 +86,7 @@ Component({
         }
       })
     },
-    onTouchStart: function ({ target, touches }) {
+    onTouchStart: function ({ touches }) {
       const { offset: { x, y }, size: { width, height }, angle } = this.data
       this.setData({
         touchStart: {
@@ -58,61 +99,97 @@ Component({
         },
       })
     },
-    onTouchMove: function ({ target, touches }) {
+    onTouchMove({ currentTarget: { dataset: { id } }, touches }) {
       const { touchStart: { touches: _touches, offsetX, offsetY, width, height, angle } } = this.data
-      if (touches.length === 1) {
-        const touch = touches[0]
-        const { pageX, pageY } = _touches[0]
 
-        const movement = {
-          x: touch.pageX - pageX,
-          y: touch.pageY - pageY,
-        }
-
-        this.setData({
-          offset: {
-            x: offsetX + movement.x,
-            y: offsetY + movement.y,
-          },
-        })
-      } else if (touches.length === 2) {
-        const points = [
-          {
-            x: _touches[0].pageX,
-            y: _touches[0].pageY,
-          },
-          {
-            x: _touches[1].pageX,
-            y: _touches[1].pageY,
-          },
-          {
-            x: touches[0].pageX,
-            y: touches[0].pageY,
-          },
-          {
-            x: touches[1].pageX,
-            y: touches[1].pageY,
-          },
-        ]
-
-        const degree_angle = this.calcAngle(...points)
-        const scale = this.calcScale(...points)
-
-        this.setData({
-          angle: angle + degree_angle,
-          size: {
-            width: width * scale,
-            height: height * scale,
-          },
-          offset: {
-            x: offsetX - (width * scale - width) / 2,
-            y: offsetY - (height * scale - height) / 2,
-          },
-        })
+      let angleChange = 0
+      let scale = 1
+      let offsetChange = {
+        x: 0,
+        y: 0,
       }
+
+      if (id === 'image') {
+        if (touches.length === 1) {
+          const touch = touches[0]
+          const { pageX, pageY } = _touches[0]
+
+          offsetChange.x = touch.pageX - pageX
+          offsetChange.y = touch.pageY - pageY
+        } else if (touches.length === 2) {
+          const points = [
+            {
+              x: _touches[0].pageX,
+              y: _touches[0].pageY,
+            },
+            {
+              x: _touches[1].pageX,
+              y: _touches[1].pageY,
+            },
+            {
+              x: touches[0].pageX,
+              y: touches[0].pageY,
+            },
+            {
+              x: touches[1].pageX,
+              y: touches[1].pageY,
+            },
+          ]
+
+          angleChange = this.calcAngle(...points)
+          scale = this.calcScale(...points)
+
+          offsetChange.x = -(width * scale - width) / 2
+          offsetChange.y = -(height * scale - height) / 2
+        }
+      } else {
+        if (touches.length === 1) {
+          const { editorOffset } = this.properties
+          const centerPoint = {
+            x: offsetX + width / 2,
+            y: offsetY + height / 2,
+          }
+
+          console.log(_touches[0], editorOffset)
+
+          const points = [
+            centerPoint,
+            {
+              x: _touches[0].pageX - editorOffset.x,
+              y: _touches[0].pageY - editorOffset.y,
+            },
+            centerPoint,
+            {
+              x: touches[0].pageX - editorOffset.x,
+              y: touches[0].pageY - editorOffset.y,
+            },
+          ]
+          if (id === 'resize') {
+            scale = this.calcScale(...points)
+
+            offsetChange.x = -(width * scale - width) / 2
+            offsetChange.y = -(height * scale - height) / 2
+          } else if (id === 'rotate') {
+            angleChange = this.calcAngle(...points)
+          }
+        }
+      }
+
+      this.setData({
+        angle: angle + angleChange,
+        size: {
+          width: width * scale,
+          height: height * scale,
+        },
+        offset: {
+          x: offsetX + offsetChange.x,
+          y: offsetY + offsetChange.y,
+        },
+      })
+
+      this.onChange()
     },
     onTouchEnd: function (e) {
-      console.log(e)
       this.setData({
         touchStart: null,
       })

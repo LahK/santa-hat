@@ -1,6 +1,6 @@
 <!--components/EditableImage/index.wxml-->
 <div
-  class="container"
+  class="container {{isControlDisplaying ? '' : 'no-control'}}"
   style="width: {{size.width}}px; height: {{size.height}}px; left: {{offset.x}}px; top: {{offset.y}}px; transform: rotateZ({{angle}}deg);"
   >
   <image
@@ -8,11 +8,30 @@
     src="{{src}}"
     style="width: {{size.width}}px; height: {{size.height}}px;"
     bindload="onImageLoad"
+    bindtap="toggleControlDisplay"
     ontouchstart="onTouchStart"
     ontouchmove="onTouchMove"
     ontouchend="onTouchEnd"
     catch:ontouchstart="catchOnTouchStart"
     catch:ontouchmove="catchOnTouchMove"
     catch:ontouchend="catchOnTouchEnd"
+    data-id="image"
+  />
+  <image class="icon close" src="../../assets/close.png" bindtap="onRemove"/>
+  <image
+    class="icon resize"
+    src="../../assets/enlarge.png"
+    ontouchstart="onTouchStart"
+    ontouchmove="onTouchMove"
+    ontouchend="onTouchEnd"
+    data-id="resize"
+  />
+  <image
+    class="icon rotate"
+    src="../../assets/rotate.png"
+    ontouchstart="onTouchStart"
+    ontouchmove="onTouchMove"
+    ontouchend="onTouchEnd"
+    data-id="rotate"
   />
 </div>

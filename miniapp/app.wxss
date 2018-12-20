@@ -33,11 +33,21 @@ page {
   outline: none;
 }
 
+button::after{ border: none; }
+
 .button:hover:not(.disabled) {
-  background-color: #d30504;
-  box-shadow: 0px 15px 20px rgba(211, 5, 4, 0.4);
+  /* background-color: #d30504; */
+  background-color: #FF6969;
+  box-shadow: 0px 15px 20px rgba(255, 105, 105, 0.4);
+  /* box-shadow: 0px 15px 20px rgba(211, 5, 4, 0.4); */
   color: #fff;
   transform: translateY(-7px);
+}
+
+.button.disabled {
+  color: rgba(255, 255, 255, 0.50);
+  background-color: rgba(255, 255, 255, 0.32);
+  cursor: not-allowed;
 }
 
 @font-face {

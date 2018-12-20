@@ -1,42 +1,9 @@
 /**index.wxss**/
 .container {
-  background-color:#BEDBFF;
+  /* background-color:#BEDBFF; */
+  background-color: #D9EBFF;
   width: 100vw;
   height: 100vh;
-}
-
-.button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 140px;
-  height: 45px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  font-weight: 500;
-  color: #000;
-  background-color: #fff;
-  border: none;
-  border-radius: 45px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  outline: none;
-}
-
-.button:hover:not(.disabled) {
-  background-color: #d30504;
-  box-shadow: 0px 15px 20px rgba(211, 5, 4, 0.4);
-  color: #fff;
-  transform: translateY(-7px);
-}
-
-.button.disabled {
-  color: rgba(255, 255, 255, 0.26);
-  background-color: rgba(255, 255, 255, 0.12);
-  cursor: not-allowed;
 }
 
 .auth-button-container {

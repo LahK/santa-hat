@@ -28,9 +28,6 @@ Page({
     wx.getSetting({
       success: (res) => {
         if (res.authSetting['scope.userInfo']) {
-          this.setData({
-            authed: true,
-          })
           wx.getUserInfo({
             complete: this.getUserInfo,
           })
@@ -54,6 +51,7 @@ Page({
         authed: true,
         userInfo: app.globalData.userInfo,
       })
+      // this.navigateToEditor()
     } else {
       this.setData({
         authed: false,

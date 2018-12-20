@@ -1,28 +1,35 @@
 // pages/editor/index.js
+import { getHDAvatarUrl } from '../../utils'
+
 const app = getApp()
 
-Page({
+let uuid = -1
 
+const newUuid = () => {
+  uuid += 1
+  return uuid
+}
+
+Page({
   /**
    * Page initial data
    */
   data: {
-    userInfo: undefined,
-    canvas: {
-      width: wx.getSystemInfoSync().windowWidth * 0.8,
-      height: wx.getSystemInfoSync().windowWidth * 0.8,
-    },
-    avatar: {
-      width: 0,
-      height: 0,
-      offsetY: 0,
-      offsetYMax: 0,
-    },
-    touch: {
-
-    },
+    avatarUrl: undefined,
     availableHats: Array.from({ length: 14 }, (v, k) => k + 1),
     hats: [],
+    isSaving: false,
+    editor: {
+      offset: {
+        x: 0,
+        y: 0,
+      },
+      size: {
+        width: 0,
+        height: 0,
+      },
+    },
+    tempFilePath: undefined,
   },
 
   /**
@@ -30,23 +37,31 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      userInfo: app.globalData.userInfo,
+      avatarUrl: getHDAvatarUrl(app.globalData.userInfo.avatarUrl),
     })
-    // wx.getImageInfo({
-    //   src: app.globalData.userInfo.avatarUrl,
-    //   success: (res) => {
-    //     const ctx = wx.createCanvasContext('lahk')
-    //     ctx.drawImage(res.path, 0, 0, this.data.canvas.width, this.data.canvas.height)
-    //     ctx.draw()
-    //   },
-    // })
   },
 
   /**
    * Lifecycle function--Called when page is initially rendered
    */
   onReady: function () {
-
+    wx.showLoading({
+      title: '加载头像中……',
+    })
+    wx.createSelectorQuery().select('.editor').boundingClientRect(({ left, top, width, height }) => {
+      this.setData({
+        editor: {
+          offset: {
+            x: left,
+            y: top,
+          },
+          size: {
+            width,
+            height, 
+          },
+        },
+      })
+    }).exec()
   },
 
   /**
@@ -105,30 +120,57 @@ Page({
    * Called when user click on the top right corner to share
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '要不要也来一个圣诞小帽？',
+      path: '/pages/index/index',
+    }
   },
-  onImageLoad: function (e) {
-    console.log(e)
-    // const width = this.data.canvas.width
-    // const height = width * e.detail.height / e.detail.width
-    // this.setData({
-    //   avatar: {
-    //     width,
-    //     height,
-    //     offsetYMax: height - width,
-    //   },
-    // })
-  },
-  onTouchStart: function(e) {
-    console.log(e)
-  },
-  onTouchMove: function (e) {
-    console.log(e)
+  onImageLoad: function(e) {
+    wx.hideLoading()
   },
   onTapItem: function(e) {
     const { number } = e.currentTarget.dataset
     this.setData({
-      hats: [...this.data.hats, number],
+      hats: [
+        ...this.data.hats, 
+        {
+          number,
+          id: newUuid(),
+        },
+      ],
+    })
+  },
+  onItemChange: function ({ detail, currentTarget }) {
+    const { id } = currentTarget.dataset
+    const hats = this.data.hats
+    const index = hats.findIndex((hat) => hat.id === id);
+
+    if (index !== -1) {
+      hats[index] = {
+        ...hats[index],
+        ...detail,
+      }
+
+      this.setData({
+        hats,
+      })
+    }
+  },
+  onItemRemove: function({ currentTarget }) {
+    const { id } = currentTarget.dataset
+
+    this.setData({
+      hats: this.data.hats.filter((hat) => hat.id !== id),
+    })
+  },
+  confirm: function() {
+    this.setData({
+      isSaving: true,
+    })
+  },
+  closeConfirmDialog: function () {
+    this.setData({
+      isSaving: false,
     })
   },
 })

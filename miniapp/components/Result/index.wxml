@@ -1,0 +1,22 @@
+<!--components/Result/index.wxml-->
+<view class="container">
+  <image class="close" src="../../assets/close-white.png" bindtap="close" />
+  <view class="main" style="width: {{posterSize.width}}px; height: {{posterSize.height}}px;">
+    <image id="border" class="border" src="../../assets/border/{{borderiImgNumber}}.png"/>
+    <canvas id="avatar" class="avatar" canvas-id="avatar"/>
+    <view class="text-container">
+      <text id="text-1" class="text1">圣诞快乐</text>
+      <view class="text2-container">
+        <view id="line-1"></view>
+        <text id="year" class="text2">2019</text>
+        <view id="line-2"></view>
+      </view>
+      <text id="text-2" class="text1">愿世界和平</text>
+    </view>
+  </view>
+  <view class="share">
+    <view class="button" bindtap="save">保存到相册</view>
+    <button class="button" open-type="share">分享给朋友</button>
+  </view>
+  <!-- <canvas class="poster" canvas-id="poster" width="{{canvasSize.width}}" height="{{canvasSize.height}}" style="width: {{posterSize.width}}px; height: {{posterSize.height}}px; top: -{{posterSize.height}}px; top: 0; left: 0; background: white; letter-spacing: 2.5px; font-weight: 100; "/> -->
+</view>
