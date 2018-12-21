@@ -50,5 +50,5 @@ canvas, .canvas {
   font-family: "Cursive Sans";
   font-size: 13px;
   /* letter-spacing: 2.5px; */
-  text-shadow: rgba(0, 0, 0, 0.1) 11.23px 2.00833px;
+  text-shadow: rgba(0, 0, 0, 0.1) 2px 2px;
 }

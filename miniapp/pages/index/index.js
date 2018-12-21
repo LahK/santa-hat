@@ -16,13 +16,15 @@ Page({
   onLoad: function() {
     const am = wx.getBackgroundAudioManager()
     am.onEnded(() => {
-      am.src = 'https://raw.githubusercontent.com/cheng-kang/notepad/master/image-bed/UNTITLED_DISC.mp3'
+      am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
     })
     am.title = 'The Christmas Song'
     am.epname = 'Christmas Songs'
     am.singer = '手嶌葵'
+    // am.autoplay = true
+    // am.loop = true
     // am.coverImgUrl = ''
-    am.src = 'https://raw.githubusercontent.com/cheng-kang/notepad/master/image-bed/UNTITLED_DISC.mp3'
+    am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
   },
   onShow: function () {
     wx.getSetting({

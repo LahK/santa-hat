@@ -1,0 +1,9 @@
+<!--components/Snowflakes/index.wxml-->
+  <div class="snow-front-wrapper">
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+  </div>
