@@ -36,7 +36,7 @@ div.snow .snow-wrapper:nth-of-type(1) .snow-item {
     animation-duration: 11s;
 }
 
-div.snow .snow-wrapper:nth-of-type(3) .snow-item { 
+div.snow .snow-wrapper:nth-of-type(3) .snow-item {
   animation-duration: 5s;
   transform: translateZ(70px);
   animation-name: sC;

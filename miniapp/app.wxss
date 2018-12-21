@@ -49,6 +49,10 @@ button::after{ border: none; }
   background-color: rgba(255, 255, 255, 0.32);
   cursor: not-allowed;
 }
+.snow-front{
+  z-index: 10000;
+  pointer-events:none;
+}
 
 @font-face {
     font-family: 'ChopinScript';

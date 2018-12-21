@@ -2,6 +2,7 @@
   "usingComponents": {
     "EditableImage": "../../components/EditableImage/index",
     "Snow": "../../components/Snow/index",
+    "Snowflakes": "../../components/Snowflakes/index",
     "Result": "../../components/Result/index",
     "Card": "../../components/Card/index"
   },
