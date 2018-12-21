@@ -21,7 +21,7 @@ Page({
     am.title = 'The Christmas Song'
     am.epname = 'Christmas Songs'
     am.singer = '手嶌葵'
-    // am.coverImgUrl = ''
+    am.coverImgUrl = '../../assets/logo.png'
     am.src = 'https://raw.githubusercontent.com/cheng-kang/notepad/master/image-bed/UNTITLED_DISC.mp3'
   },
   onShow: function () {

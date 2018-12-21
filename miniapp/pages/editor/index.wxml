@@ -16,5 +16,5 @@
       </div>
     </div>
   </div>
-  <Result wx:if="{{isSaving}}" hats="{{hats}}" avatarUrl="{{avatarUrl}}" bindonclose="closeConfirmDialog" editorSize="{{editor.size}}"/>
+  <Result wx:if="{{isSaving}}" hats="{{hats}}" avatarUrl="{{avatarUrl}}" editorSize="{{editor.size}}" bindonclose="closeConfirmDialog" bindonavatarsave="updateAvatarTempFilePath"/>
 </div>

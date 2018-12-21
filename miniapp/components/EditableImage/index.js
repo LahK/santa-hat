@@ -150,8 +150,6 @@ Component({
             y: offsetY + height / 2,
           }
 
-          console.log(_touches[0], editorOffset)
-
           const points = [
             centerPoint,
             {

@@ -1,0 +1,5 @@
+<!--index.wxml-->
+<view class="container">
+  <canvas canvas-id="normal"  style="width: {{canvas.width}}px; height: {{canvas.height}}px;" />
+  <canvas canvas-id="hd" width="canvas.width * pixelRatio" height="canvas.height * pixelRatio" style="width: {{canvas.width * pixelRatio}}px; height: {{canvas.height * pixelRatio}}px;" />
+</view>
