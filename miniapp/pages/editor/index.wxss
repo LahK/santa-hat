@@ -2,8 +2,8 @@
 .container {
   width: 100vw;
   height: 100vh;
-  background-color: #D9EBFF;
-  /* background-color: #BEDBFF; */
+  /* background-color: #D9EBFF; */
+  background-color: #BEDBFF;
   /* background-color:#AF3B49; */
 
   display: flex;

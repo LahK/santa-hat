@@ -1,22 +1,27 @@
 <!--components/Result/index.wxml-->
 <view class="container">
   <image class="close" src="../../assets/close-white.png" bindtap="close" />
-  <view class="main" style="width: {{posterSize.width}}px; height: {{posterSize.height}}px;">
-    <image id="border" class="border" src="../../assets/border/{{borderiImgNumber}}.png"/>
-    <canvas id="avatar" class="avatar" canvas-id="avatar"/>
-    <view class="text-container">
-      <text id="text-1" class="text1">圣诞快乐</text>
-      <view class="text2-container">
-        <view id="line-1"></view>
-        <text id="year" class="text2">2019</text>
-        <view id="line-2"></view>
-      </view>
-      <text id="text-2" class="text1">愿世界和平</text>
-    </view>
+  <view class="poster" style="width: {{view.poster.width}}px; height: {{view.poster.height}}px;">
+    <image id="border" class="border" src="../../assets/border/{{borderImgNumber}}.png" style="top: {{view.border.top}}px; left: {{view.border.left}}px;"/>
+    <image id="avatar" class="avatar" src="{{avatarTempFilePath}}" style="width: {{view.avatar.width}}px; height: {{view.avatar.height}}px; top: {{view.avatar.top}}px; left: {{view.avatar.left}}px;" />
+    <image id="qrcode" class="qrcode" src="../../assets/qrcode.jpeg" style="width: {{view.qrcode.width}}px; height: {{view.qrcode.height}}px; top: {{view.qrcode.top}}px; left: {{view.qrcode.left}}px;"/>
+    <text id="merryXmasText" class="merryXmasText" style="top: {{view.merryXmasText.top}}px; left: {{view.merryXmasText.left}}px;">圣诞快乐</text>
+    <view id="dashLeft" class="dash" style="width: {{view.dashLeft.width}}px; height: {{view.dashLeft.height}}px; top: {{view.dashLeft.top}}px; left: {{view.dashLeft.left}}px;"/>
+    <text id="yearText" class="yearText" style="top: {{view.yearText.top}}px; left: {{view.yearText.left}}px;">2019</text>
+    <view id="dashRight" class="dash" style="width: {{view.dashRight.width}}px; height: {{view.dashRight.height}}px; top: {{view.dashRight.top}}px; left: {{view.dashRight.left}}px;"/>
+    <text id="peaceText" class="peaceText" style="top: {{view.peaceText.top}}px; left: {{view.peaceText.left}}px;">愿世界和平</text>
+    <text id="metaText" class="metaText" style="top: {{view.metaText.top}}px; left: {{view.metaText.left}}px;">圣诞小帽 · Santa Hat - Lahk</text>
   </view>
   <view class="share">
     <view class="button" bindtap="save">保存到相册</view>
     <button class="button" open-type="share">分享给朋友</button>
   </view>
-  <!-- <canvas class="poster" canvas-id="poster" width="{{canvasSize.width}}" height="{{canvasSize.height}}" style="width: {{posterSize.width}}px; height: {{posterSize.height}}px; top: -{{posterSize.height}}px; top: 0; left: 0; background: white; letter-spacing: 2.5px; font-weight: 100; "/> -->
+  <canvas
+    canvas-id="avatar"
+    style="width: {{canvas.avatar.width}}px; height: {{canvas.avatar.height}}px; top: -{{canvas.avatar.height}}px; {{canvas.avatar.height ? '' : 'display: none;'}}left: 0; background: white;"
+    />
+  <canvas
+    canvas-id="poster"
+    style="width: {{canvas.poster.width}}px; height: {{canvas.poster.height}}px; top: -{{canvas.poster.height}}px; left: 0; background: white; letter-spacing: {{canvas.poster.letterSpacing}}px;"
+    />
 </view>

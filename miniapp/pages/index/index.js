@@ -6,27 +6,35 @@ Page({
   data: {
     authed: undefined,
     userInfo: undefined,
+    isNavigating: false,
   },
   //事件处理函数
   navigateToEditor: function() {
-    wx.navigateTo({
-      url: '../editor/index'
+    this.setData({
+      isNavigating: true,
     })
+
+    setTimeout(() => {
+      wx.navigateTo({
+        url: '../editor/index'
+      })
+    }, 700)
   },
   onLoad: function() {
-    const am = wx.getBackgroundAudioManager()
-    am.onEnded(() => {
-      am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
-    })
-    am.title = 'The Christmas Song'
-    am.epname = 'Christmas Songs'
-    am.singer = '手嶌葵'
-    // am.autoplay = true
-    // am.loop = true
-    // am.coverImgUrl = ''
-    am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
+    // const am = wx.getBackgroundAudioManager()
+    // am.onEnded(() => {
+    //   am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
+    // })
+    // am.title = 'The Christmas Song'
+    // am.epname = 'Christmas Songs'
+    // am.singer = '手嶌葵'
+    // am.coverImgUrl = '../../assets/logo.png'
+    // am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
   },
   onShow: function () {
+    this.setData({
+      isNavigating: false,
+    })
     wx.getSetting({
       success: (res) => {
         if (res.authSetting['scope.userInfo']) {

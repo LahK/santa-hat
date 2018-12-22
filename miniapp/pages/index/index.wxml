@@ -1,32 +1,29 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container {{isNavigating ? 'navigating' : ''}}">
   <Snow />
   <Snowflakes class="snow-front"/>
 
-  <div class="logo-container">
-      <div class="logo">
-          <div class="logo-hat"></div>
-      </div>
+  <div class="banner-container">
+      <image class="banner" src="../../assets/banner.png">
+        <image class="banner-hat" src="../../assets/santa-hat.png"></image>
+      </image>
   </div>
 
   <div class="main-container">
     <div class="scene">
         <div class="land"></div>
-        <div class="tree"></div>
-        <div class="santa-claus"></div>
-        <div class="snowman"></div>
+        <image class="santa-deer" src="../../assets/santa-deer.png"/>
     </div>
 
-    <div class="warpper">
-        <div class="auth-button-container">
-            <button wx:if="{{!authed}}" class="button auth-button {{checkingAuth ? 'disabled' : ''}}" disabled="{{authed === undefined}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权获取头像昵称 </button>
-            <view wx:else class="button auth-button" bindtap="navigateToEditor"> 获取圣诞小帽 </view>
-        </div>
+    <div class="auth-button-container">
+        <button wx:if="{{!authed}}" class="button auth-button {{checkingAuth ? 'disabled' : ''}}" disabled="{{authed === undefined}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权获取头像昵称 </button>
+        <view wx:else class="button auth-button" bindtap="navigateToEditor"> 获取圣诞小帽 </view>
+    </div>
 
-        <text class="title">“My idea of Christmas, whether old-fashioned or modern, is very simple: loving others.”</text>
+    <div class="text-warpper">
+      <text class="appreciation">*部分图片素材来自 Freepik, Christmas HQ</text>
+      <text class="appreciation">*特别感谢 Weii 的支持</text>
+      <text class="copyright">©️ 2018 LahK</text>
     </div>
   </div>
-
-  <div class="footer">Copyright @ LahK 2018</div>
-
 </view>

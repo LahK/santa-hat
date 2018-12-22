@@ -4,7 +4,7 @@
   <Snowflakes  class="snow-front"/>
   <view class="editor">
     <image id="avatar" class="avatar" src="{{avatarUrl}}" bindload="onImageLoad" />
-    <EditableImage wx:for="{{hats}}" wx:for-item="hat" wx:key="id" data-id="{{hat.id}}" src="../../assets/hat/{{hat.number}}.png" editorOffset="{{editor.offset}}" bindonchange="onItemChange" bindonremove="onItemRemove"/>
+    <EditableImage wx:for="{{hats}}" wx:for-item="hat" wx:key="id" data-id="{{hat.id}}" src="http://pk1i5o4bn.bkt.clouddn.com/hat/{{hat.number}}.png" editorOffset="{{editor.offset}}" bindonchange="onItemChange" bindonremove="onItemRemove"/>
   </view>
   <div>
     <div class="button auth-button" bindtap="confirm"> 完成了 </div>
@@ -13,9 +13,9 @@
     <text>选择你的圣诞小帽：</text>
     <div class="list">
       <div class="item" wx:for="{{availableHats}}" wx:for-item="number" wx:key="index" bindtap="onTapItem" data-number="{{number}}">
-        <image src="../../assets/hat/{{number}}.png" />
+        <image src="http://pk1i5o4bn.bkt.clouddn.com/hat/{{number}}.png" mode="aspectFit"/>
       </div>
     </div>
   </div>
-  <Result wx:if="{{isSaving}}" hats="{{hats}}" avatarUrl="{{avatarUrl}}" bindonclose="closeConfirmDialog" editorSize="{{editor.size}}"/>
+  <Result wx:if="{{isSaving}}" hats="{{hats}}" avatarUrl="{{avatarUrl}}" editorSize="{{editor.size}}" bindonclose="closeConfirmDialog" bindonavatarsave="updateAvatarTempFilePath"/>
 </div>

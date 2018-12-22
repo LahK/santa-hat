@@ -21,20 +21,85 @@ Component({
    * Component initial data
    */
   data: {
-    borderiImgNumber: getRandomInt(5),
-    avatarWidth: undefined,
-    canvasSize: {
-      width: wx.getSystemInfoSync().windowWidth * wx.getSystemInfoSync().pixelRatio,
-      height: wx.getSystemInfoSync().windowHeight * wx.getSystemInfoSync().pixelRatio,
+    borderImgNumber: getRandomInt(5),
+    avatarTempFilePath: '',
+    view: {
+      poster: {
+        width: 298,
+        height: 417,
+      },
+      border: {
+        left: 0,
+        top: 0,
+        width: 298,
+        height: 417,
+      },
+      avatar: {
+        left: 0,
+        top: 64,
+        width: 120,
+        height: 120,
+      },
+      qrcode: {
+        left: 0,
+        top: 200,
+        width: 64,
+        height: 64,
+      },
+      merryXmasText: {
+        left: 0,
+        top: 272,
+      },
+      dashLeft: {
+        left: 0,
+        top: 311,
+        width: 32,
+        height: 1,
+      },
+      yearText: {
+        left: 0,
+        top: 304,
+      },
+      dashRight: {
+        left: 0,
+        top: 311,
+        width: 32,
+        height: 1,
+      },
+      peaceText: {
+        left: 0,
+        top: 322,
+      },
+      metaText: {
+        left: 0,
+        top: 364,
+      },
     },
-    posterSize: {
-      width: wx.getSystemInfoSync().windowWidth * 0.72,
-      height: wx.getSystemInfoSync().windowWidth * 0.72 * (wx.getSystemInfoSync().windowHeight / wx.getSystemInfoSync().windowWidth),
+    canvas: {
+      avatar: {
+        width: undefined,
+        height: undefined,
+      },
+      poster: {
+        width: 298 * wx.getSystemInfoSync().pixelRatio,
+        height: 417 * wx.getSystemInfoSync().pixelRatio,
+        letterSpacing: 2.5,
+      },
     },
   },
 
-  ready: function() {
-    this.draw()
+  ready: function () {
+    wx.showLoading({
+      title: '准备中……',
+      mask: true,
+    })
+
+    this.repositionPoster()
+      .then(() => {
+        wx.hideLoading()
+
+        return this.draw()
+      })
   },
 
   /**
@@ -44,89 +109,210 @@ Component({
     close: function() {
       this.triggerEvent('onclose')
     },
-    draw: function () {
-      const that = this
-      function getBoundingClientRect(selector) {
-        return new Promise((resolve) => {
-          wx.createSelectorQuery().in(that).select(selector).boundingClientRect().exec((res) => {
-            resolve(res && res[0])
-          })
+    getBoundingClientRect: function (selector) {
+      return new Promise((resolve) => {
+        wx.createSelectorQuery().in(this).select(selector).boundingClientRect().exec((res) => {
+          resolve(res && res[0])
         })
-      }
+      })
+    },
+    getBoundingClientRectList: function (selectors) {
+      return Promise.all(selectors.map((selector) => this.getBoundingClientRect(selector)))
+    },
+    repositionPoster: function() {
+      return new Promise((resolve, reject) => {
+        this.getBoundingClientRectList([
+          '#merryXmasText',
+          '#yearText',
+          '#peaceText',
+          '#metaText',
+        ]).then((rects) => {
+          const { poster, avatar, qrcode, merryXmasText, yearText, peaceText, metaText, dashLeft, dashRight } = this.data.view
 
-      function getBoundingClientRectList(selectors) {
-        return Promise.all(selectors.map((selector) => getBoundingClientRect(selector)))
-      }
+          const calcLeft = (width) => (poster.width - width) / 2
+          const calcTop = (height) => (poster.height - height) / 2
 
+          this.setData({
+            view: {
+              ...this.data.view,
+              avatar: {
+                ...avatar,
+                left: calcLeft(avatar.width),
+              },
+              qrcode: {
+                ...qrcode,
+                left: calcLeft(qrcode.width),
+              },
+              merryXmasText: {
+                ...merryXmasText,
+                left: calcLeft(rects[0].width),
+                width: rects[0].width,
+                height: rects[0].height,
+              },
+              yearText: {
+                ...yearText,
+                left: calcLeft(rects[1].width),
+                width: rects[1].width,
+                height: rects[1].height,
+              },
+              peaceText: {
+                ...peaceText,
+                left: calcLeft(rects[2].width),
+                width: rects[2].width,
+                height: rects[2].height,
+              },
+              metaText: {
+                ...metaText,
+                left: calcLeft(rects[3].width),
+                width: rects[3].width,
+                height: rects[3].height,
+              },
+              dashLeft: {
+                ...dashLeft,
+                left: calcLeft(rects[1].width) - 8 - dashLeft.width,
+              },
+              dashRight: {
+                ...dashRight,
+                left: calcLeft(rects[1].width) + rects[1].width + 8,
+              },
+            }
+          })
+
+          resolve()
+        })
+      })
+    },
+    draw: function () {
       wx.showLoading({
         title: '生成中……',
         mask: true,
       })
 
-      getBoundingClientRectList([
-        '#border',
-        '#avatar',
-        '#text-1',
-        '#line-1',
-        '#year',
-        '#line-2',
-        '#text-2',
-      ]).then((rects) => {
-        const _rects = {}
-        rects.forEach((rect) => {
-          _rects[rect.id] = rect
-        })
-
-        this.drawAvatar().then(() => {
-          this.drawPoster(_rects).then(() => {
-            wx.hideLoading()
+      this.drawAvatar()
+        .then((canvasId) => {
+          return this.saveTempFile(canvasId, {
+            width: this.data.canvas.avatar.width,
+            height: this.data.canvas.avatar.width,
+            destWidth: this.data.canvas.avatar.width,
+            destHeight: this.data.canvas.avatar.width,
           })
-        }).catch((error) => {
-          console.error(err)
+        })
+        .then(({ tempFilePath }) => {
+          this.setData({
+            avatarTempFilePath: tempFilePath,
+          })
+
+          this.triggerEvent('onavatarsave', tempFilePath)
+
+          return this.drawPoster()
+        })
+        .then((canvasId) => {
+          return this.saveTempFile(canvasId, {
+            width: this.data.canvas.poster.width,
+            height: this.data.canvas.poster.height,
+            destWidth: this.data.canvas.poster.width,
+            destHeight: this.data.canvas.poster.height,
+          })
+        })
+        .then(({ tempFilePath }) => {
+          this.setData({
+            posterTempFilePath: tempFilePath,
+          })
+
+          return Promise.resolve()
+        })
+        .then(() => {
+          wx.hideLoading()
+
+          wx.showToast({
+            title: '头像和海报生成成功！',
+            icon: 'none',
+          })
+        })
+        .catch((error) => {
+          console.error(error)
           wx.hideLoading()
           wx.showToast({
-            title: '生成失败，请重试',
-            icon: 'cancel',
+            title: '生成失败，请重试……',
+            icon: 'none',
           })
 
           this.close()
         })
-      })
     },
-    drawPoster: function(rects) {
+    drawPoster: function() {
       return new Promise((resolve, reject) => {
-        resolve()
-        // console.log(rects)
-        // const ctx = wx.createCanvasContext('poster', this)
+        const { poster, border, avatar, qrcode, merryXmasText, yearText, peaceText, metaText, dashLeft, dashRight } = this.data.view
 
-        // const { width, height } = this.data.posterSize
+        const { pixelRatio } = wx.getSystemInfoSync()
 
-        // const canvasAndFileScale = width / wx.getSystemInfoSync().windowWidth
-        // // ctx.scale(canvasAndFileScale, canvasAndFileScale)
-        // console.log(wx.getSystemInfoSync().pixelRatio)
-        // ctx.scale(wx.getSystemInfoSync().pixelRatio, wx.getSystemInfoSync().pixelRatio);
+        const ctx = wx.createCanvasContext('poster', this)
 
-        // const baseOffset = {
-        //   x: rects['border'].left,
-        //   y: rects['border'].top,
-        // }
+        ctx.scale(pixelRatio, pixelRatio)
 
-        // // draw border
-        // ctx.drawImage(`../../assets/border/${this.data.borderiImgNumber}.png`, 0, 0, wx.getSystemInfoSync().windowWidth, wx.getSystemInfoSync().windowHeight)
+        // draw background
+        ctx.fillStyle = "#ffffff"
+        ctx.fillRect(
+          0,
+          0,
+          poster.width,
+          poster.height,
+        )
 
-        // // draw red texts
-        // console.log(21 / canvasAndFileScale)
-        // ctx.font = `${Math.round(21 / canvasAndFileScale)}px "Hiragino Sans GB"`
-        // ctx.fillStyle = '#cc2832'
-        // ctx.fillText('圣诞快乐', (rects['text-1'].left - baseOffset.x) / canvasAndFileScale, (rects['text-1'].top - baseOffset.y) / canvasAndFileScale)
+        // draw border
+        ctx.drawImage(`../../assets/border/${this.data.borderImgNumber}.png`, border.left , border.top , border.width , border.height)
 
-        // // hats.forEach((hat) => {
-        // //   this.drawHat(ctx, canvasAndEditorScale, hat)
-        // // })
+        // draw avatar
+        ctx.drawImage(
+          this.data.avatarTempFilePath,
+          avatar.left ,
+          avatar.top ,
+          avatar.width,
+          avatar.height,
+        )
 
-        // ctx.draw(true, () => {
-        //   resolve()
-        // })
+        // draw qrcode
+        ctx.drawImage(
+          '../../assets/qrcode.jpeg',
+          qrcode.left,
+          qrcode.top,
+          qrcode.width,
+          qrcode.height,
+        )
+
+        // draw texts
+        ctx.font = `500 21px "Hiragino Sans GB"`
+        ctx.fillStyle = '#cc2832'
+        ctx.fillText('圣诞快乐', merryXmasText.left + 5, merryXmasText.top + 20)
+        ctx.fillText('愿世界和平', peaceText.left + 6, peaceText.top + 20)
+
+        ctx.font = `500 10px "Hiragino Sans GB"`
+        ctx.fillStyle = '#18563b'
+        ctx.fillText('2019', yearText.left + 5, yearText.top + 8)
+
+        ctx.fillRect(
+          dashLeft.left + 1,
+          dashLeft.top - 4,
+          dashLeft.width,
+          dashLeft.height,
+        )
+        ctx.fillRect(
+          dashRight.left - 3,
+          dashRight.top - 4,
+          dashRight.width,
+          dashRight.height,
+        )
+
+        this.setData({
+          'canvas.poster.letterSpacing': 1,
+        })
+        ctx.font = `8px "Hiragino Sans GB"`
+        ctx.fillStyle = '#000000'
+        ctx.fillText('圣诞小帽 · Santa Hat - LahK', metaText.left, metaText.top + 8)
+
+        ctx.draw(true, () => {
+          resolve('poster')
+        })
       })
     },
     drawAvatar: function() {
@@ -135,81 +321,94 @@ Component({
 
         promisify(wx.getImageInfo)({
           src: avatarUrl,
-        }).then(({ width, height, path }) => {
-          this.setData({
-            avatarWidth: width,
-          })
+        }).then(({ width, path }) => {
+          this.updateAvatarCanvasSize(width)
+
           const ctx = wx.createCanvasContext('avatar', this)
 
-          const canvasAndFileScale = 120 / width
-          ctx.scale(canvasAndFileScale, canvasAndFileScale)
+          const { width: avatarWidth } = this.data.canvas.avatar
 
           const canvasAndEditorScale = width / editorSize.width
 
-          ctx.drawImage(path, 0, 0, width, width)
+          const scale = wx.getSystemInfoSync().pixelRatio * canvasAndEditorScale
+
+          ctx.drawImage(path, 0, 0, avatarWidth, avatarWidth)
 
           hats.forEach((hat) => {
-            this.drawHat(ctx, canvasAndEditorScale, hat)
+            this.drawHat(ctx, hat, canvasAndEditorScale)
           })
 
           ctx.draw(true, () => {
-            resolve()
+            resolve('avatar')
           })
         }).catch((error) => reject(error))
       })
     },
-    drawHat: function (ctx, scale, hat) {
+    drawHat: function (ctx, hat, scale = 1) {
       const angle = hat.angle * Math.PI / 180
       ctx.translate((hat.offset.x + hat.size.width / 2) * scale, (hat.offset.y + hat.size.height / 2) * scale)
       ctx.rotate(angle)
-      ctx.drawImage(`../../assets/hat/${hat.number}.png`, -hat.size.width / 2 * scale, -hat.size.height / 2 * scale, hat.size.width * scale, hat.size.height * scale)
+      ctx.drawImage(`http://pk1i5o4bn.bkt.clouddn.com/hat/${hat.number}.png`, -hat.size.width / 2 * scale, -hat.size.height / 2 * scale, hat.size.width * scale, hat.size.height * scale)
       ctx.rotate(-angle)
       ctx.translate(-(hat.offset.x + hat.size.width / 2) * scale, -(hat.offset.y + hat.size.height / 2) * scale)
     },
+    updateAvatarCanvasSize: function(width) {
+      this.setData({
+        canvas: {
+          ...this.data.canvas,
+          avatar: {
+            width,
+            height: width,
+          },
+        },
+      })
+    },
+    saveTempFile: function (canvasId, config = {}) {
+      return promisify(wx.canvasToTempFilePath)({
+        canvasId,
+        ...config,
+      }, this)
+    },
+    saveToAlbum: function (filePath) {
+      return promisify(wx.saveImageToPhotosAlbum)({
+        filePath,
+      })
+    },
     save: function () {
-      const { avatarWidth } = this.data
-      promisify(wx.canvasToTempFilePath)({
-        canvasId: 'avatar',
-        width: avatarWidth,
-        height: avatarWidth,
-        complete: () => {
+      wx.showLoading({
+        title: '保存中……',
+        mask: true,
+      })
+
+      this.saveToAlbum(this.data.avatarTempFilePath)
+        .then(() => {
+          return this.saveToAlbum(this.data.posterTempFilePath)
+        })
+        .then(() => {
           wx.hideLoading()
-          this.setData({
-            isSaving: false,
-          })
-        }
-      }, this).then((res) => {
-        promisify(wx.saveImageToPhotosAlbum)({
-          filePath: res.tempFilePath,
-        }).then(() => {
+
           wx.showToast({
             title: '已保存到相册',
+            duration: 3000,
           })
-        }).catch(({ errMsg }) => {
-          console.error(errMsg)
-          if (errMsg === 'saveImageToPhotosAlbum:fail cancel') {
+        })
+        .catch((error) => {
+          wx.hideLoading()
+
+          console.error(error)
+
+          if (error.errMsg === 'saveImageToPhotosAlbum:fail cancel') {
             wx.showToast({
               title: '取消保存到相册',
-              icon: 'cancel',
+              icon: 'none',
             })
           } else {
             wx.showToast({
               title: '保存到相册失败',
-              icon: 'cancel',
+              icon: 'none',
             })
           }
         })
-      }).catch((error) => {
-        console.error(error)
-        wx.hideLoading()
-        this.setData({
-          drawingFinished: true,
-        })
-        wx.showToast({
-          title: '保存到相册失败',
-          icon: 'cancel',
-        })
-      })
     }
   },
 })

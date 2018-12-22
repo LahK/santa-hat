@@ -16,7 +16,7 @@ Page({
    */
   data: {
     avatarUrl: undefined,
-    availableHats: Array.from({ length: 14 }, (v, k) => k + 1),
+    availableHats: Array.from({ length: 32 }, (v, k) => k + 1),
     hats: [],
     isSaving: false,
     editor: {
@@ -29,7 +29,7 @@ Page({
         height: 0,
       },
     },
-    tempFilePath: undefined,
+    avatarTempFilePath: undefined,
   },
 
   /**
@@ -121,8 +121,9 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '要不要也来一个圣诞小帽？',
+      title: '要不要也来个圣诞小帽？',
       path: '/pages/index/index',
+      imageUrl: this.data.avatarTempFilePath,
     }
   },
   onImageLoad: function(e) {
@@ -171,6 +172,11 @@ Page({
   closeConfirmDialog: function () {
     this.setData({
       isSaving: false,
+    })
+  },
+  updateAvatarTempFilePath: function (e) {
+    this.setData({
+      avatarTempFilePath: e.detail,
     })
   },
 })
