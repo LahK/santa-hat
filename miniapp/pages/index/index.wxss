@@ -9,16 +9,8 @@
 .auth-button-container {
   position: absolute;
   bottom: 90px;
-}
 
-.santa-hat {
-  position: absolute;
-  top: -18px;
-  right: -10px;
-  width: 30px;
-  height: 30px;
-  transform: rotateZ(30deg);
-  transition: all 0.3s ease 0s;
+  transition: all 1s ease-in-out;
 }
 
 .auth-button:hover:not(.disabled) + .santa-hat {
@@ -40,15 +32,81 @@ canvas, .canvas {
   height: 100%;
 }
 
-.title {
+.copyright {
   position: absolute;
   bottom: 0;
   margin: 2em 0;
 
-  color: white;
+  color: black;
   text-align: center;
-  font-family: "Cursive Sans";
-  font-size: 13px;
-  /* letter-spacing: 2.5px; */
-  text-shadow: rgba(0, 0, 0, 0.1) 2px 2px;
+  font-size: 8px;
+  letter-spacing: 1px;
+
+  transition: all 1s ease-in-out;
+}
+
+.logo {
+  position: absolute;
+  width: 80vw;
+  height: 22vw;
+  top: 10vh;
+  left: 13vw;
+  
+  transition: all 1s ease-in-out;
+}
+
+.scene {
+  position: absolute;
+  bottom: 0;
+  background: #fff;
+  height: 20vh;
+  width: 100vw;
+  
+  transition: all 1s ease-in-out;
+}
+
+.scene .land {
+  position: absolute;
+  top: -80px;
+  left: -10vw;
+  width: 120vw;
+  height: 80px;
+  display: block;
+  background: #fff;
+  border-radius: 50% / 100% 100% 0 0;
+
+  transition: all 1s ease-in-out;
+}
+
+.santa-deer {
+  position: absolute;
+  bottom: 25vh;
+  width: 50vw;
+  height: 40.4vw;
+  z-index: 99;
+
+  transition: all 1s ease-in-out;
+}
+
+.navigating .logo {
+  top: calc(-22vw - 31px);
+}
+.navigating .santa-deer {
+  bottom: calc(-40.4vw - 31px);
+}
+.navigating .scene {
+  bottom: -51vh;
+}
+.navigating .scene .land {
+  top: -31px;
+}
+.navigating .auth-button-container {
+  bottom: -83px;
+}
+.navigating .copyright {
+  bottom: -31px;
+}
+
+.button {
+  box-shadow: 0px 8px 15px rgba(190, 219, 255, 0.3);
 }
