@@ -32,6 +32,20 @@ canvas, .canvas {
   height: 100%;
 }
 
+.appreciation {
+  position: absolute;
+  bottom: 4em;
+
+  color: black;
+  text-align: center;
+  font-size: 8px;
+  letter-spacing: 1px;
+
+  transition: all 1s ease-in-out;
+}
+.appreciation:first-of-type {
+  bottom: 6em;
+}
 .copyright {
   position: absolute;
   bottom: 0;
@@ -104,6 +118,9 @@ canvas, .canvas {
   bottom: -83px;
 }
 .navigating .copyright {
+  bottom: -31px;
+}
+.navigating .appreciation {
   bottom: -31px;
 }
 

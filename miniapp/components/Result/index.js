@@ -1,9 +1,6 @@
 // components/Result/index.js
 import { promisify, getRandomInt } from '../../utils'
 
-// height / width
-const POSTER_RATIO = 21 / 15
-
 Component({
   /**
    * Component properties

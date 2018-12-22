@@ -16,7 +16,7 @@ Page({
    */
   data: {
     avatarUrl: undefined,
-    availableHats: Array.from({ length: 16 }, (v, k) => k + 1),
+    availableHats: Array.from({ length: 32 }, (v, k) => k + 1),
     hats: [],
     isSaving: false,
     editor: {

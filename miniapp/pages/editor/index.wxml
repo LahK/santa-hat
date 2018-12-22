@@ -13,7 +13,7 @@
     <text>选择你的圣诞小帽：</text>
     <div class="list">
       <div class="item" wx:for="{{availableHats}}" wx:for-item="number" wx:key="index" bindtap="onTapItem" data-number="{{number}}">
-        <image src="../../assets/hat/{{number}}.png" />
+        <image src="../../assets/hat/{{number}}.png" mode="aspectFit"/>
       </div>
     </div>
   </div>
