@@ -329,13 +329,14 @@ Component({
           const ctx = wx.createCanvasContext('avatar', this)
 
           const { width: avatarWidth } = this.data.canvas.avatar
+          const { pixelRatio } = wx.getSystemInfoSync()
 
           const canvasAndEditorScale = width / editorSize.width
 
           ctx.drawImage(path, 0, 0, avatarWidth, avatarWidth)
 
           hats.forEach((hat) => {
-            this.drawHat(ctx, hat, canvasAndEditorScale)
+            this.drawHat(ctx, hat, canvasAndEditorScale * pixelRatio)
           })
 
           ctx.draw(true, () => {
