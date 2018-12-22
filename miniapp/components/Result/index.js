@@ -42,33 +42,33 @@ Component({
       },
       qrcode: {
         left: 0,
-        top: 200,
+        top: 208,
         width: 64,
         height: 64,
       },
       merryXmasText: {
         left: 0,
-        top: 272,
+        top: 280,
       },
       dashLeft: {
         left: 0,
-        top: 311,
+        top: 319,
         width: 32,
         height: 1,
       },
       yearText: {
         left: 0,
-        top: 304,
+        top: 312,
       },
       dashRight: {
         left: 0,
-        top: 311,
+        top: 319,
         width: 32,
         height: 1,
       },
       peaceText: {
         left: 0,
-        top: 322,
+        top: 330,
       },
       metaText: {
         left: 0,
@@ -125,7 +125,7 @@ Component({
           '#merryXmasText',
           '#yearText',
           '#peaceText',
-          '#metaText',
+          // '#metaText',
         ]).then((rects) => {
           const { poster, avatar, qrcode, merryXmasText, yearText, peaceText, metaText, dashLeft, dashRight } = this.data.view
 
@@ -161,12 +161,12 @@ Component({
                 width: rects[2].width,
                 height: rects[2].height,
               },
-              metaText: {
-                ...metaText,
-                left: calcLeft(rects[3].width),
-                width: rects[3].width,
-                height: rects[3].height,
-              },
+              // metaText: {
+              //   ...metaText,
+              //   left: calcLeft(rects[3].width),
+              //   width: rects[3].width,
+              //   height: rects[3].height,
+              // },
               dashLeft: {
                 ...dashLeft,
                 left: calcLeft(rects[1].width) - 8 - dashLeft.width,
@@ -283,32 +283,32 @@ Component({
         // draw texts
         ctx.font = `500 21px "Hiragino Sans GB"`
         ctx.fillStyle = '#cc2832'
-        ctx.fillText('圣诞快乐', merryXmasText.left + 5, merryXmasText.top + 20)
-        ctx.fillText('愿世界和平', peaceText.left + 6, peaceText.top + 20)
+        ctx.fillText('圣诞快乐', merryXmasText.left + 2, merryXmasText.top + 20)
+        ctx.fillText('愿世界和平', peaceText.left + 1, peaceText.top + 20)
 
         ctx.font = `500 10px "Hiragino Sans GB"`
         ctx.fillStyle = '#18563b'
-        ctx.fillText('2019', yearText.left + 5, yearText.top + 8)
+        ctx.fillText('2019', yearText.left + 2, yearText.top + 8)
 
         ctx.fillRect(
-          dashLeft.left + 1,
+          dashLeft.left + 3,
           dashLeft.top - 4,
           dashLeft.width,
           dashLeft.height,
         )
         ctx.fillRect(
-          dashRight.left - 3,
+          dashRight.left - 2,
           dashRight.top - 4,
           dashRight.width,
           dashRight.height,
         )
 
-        this.setData({
-          'canvas.poster.letterSpacing': 1,
-        })
-        ctx.font = `8px "Hiragino Sans GB"`
-        ctx.fillStyle = '#000000'
-        ctx.fillText('圣诞小帽 · Santa Hat - LahK', metaText.left, metaText.top + 8)
+        // this.setData({
+        //   'canvas.poster.letterSpacing': 1,
+        // })
+        // ctx.font = `8px "Hiragino Sans GB"`
+        // ctx.fillStyle = '#000000'
+        // ctx.fillText('圣诞小帽 · Santa Hat - LahK', metaText.left, metaText.top + 8)
 
         ctx.draw(true, () => {
           resolve('poster')

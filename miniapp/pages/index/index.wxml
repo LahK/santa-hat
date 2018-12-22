@@ -6,7 +6,9 @@
   </div>
   <Snow />
   <Snowflakes  class="snow-front"/>
-  <image class="logo" src="../../assets/banner.png"/>
+  <image class="banner" src="../../assets/banner.png">
+    <image class="banner-hat" src="../../assets/hat/4.png" />
+  </image>
   <text class="appreciation">*部分图片素材来自 Freepik, Christmas HQ</text>
   <text class="appreciation">*特别感谢 Weii 的支持</text>
   <text class="copyright">©️ 2018 LahK</text>

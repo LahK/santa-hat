@@ -59,14 +59,25 @@ canvas, .canvas {
   transition: all 1s ease-in-out;
 }
 
-.logo {
+.banner {
   position: absolute;
   width: 80vw;
   height: 22vw;
   top: 10vh;
   left: 13vw;
+  overflow: visible;
   
   transition: all 1s ease-in-out;
+}
+.banner .banner-hat {
+  position: absolute;
+  display:block;
+  width: 60px;
+  height: 38.8px;
+  right: -20px;
+  top: 0;
+  transform: rotate(45deg);
+  filter:drop-shadow(2px -1px 4px rgba(0,0,0,0.45));
 }
 
 .scene {
@@ -102,7 +113,7 @@ canvas, .canvas {
   transition: all 1s ease-in-out;
 }
 
-.navigating .logo {
+.navigating .banner {
   top: calc(-22vw - 31px);
 }
 .navigating .santa-deer {

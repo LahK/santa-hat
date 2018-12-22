@@ -10,7 +10,7 @@
     <text id="yearText" class="yearText" style="top: {{view.yearText.top}}px; left: {{view.yearText.left}}px;">2019</text>
     <view id="dashRight" class="dash" style="width: {{view.dashRight.width}}px; height: {{view.dashRight.height}}px; top: {{view.dashRight.top}}px; left: {{view.dashRight.left}}px;"/>
     <text id="peaceText" class="peaceText" style="top: {{view.peaceText.top}}px; left: {{view.peaceText.left}}px;">愿世界和平</text>
-    <text id="metaText" class="metaText" style="top: {{view.metaText.top}}px; left: {{view.metaText.left}}px;">圣诞小帽 · Santa Hat - Lahk</text>
+    <!-- <text id="metaText" class="metaText" style="top: {{view.metaText.top}}px; left: {{view.metaText.left}}px;">圣诞小帽 · Santa Hat - Lahk</text> -->
   </view>
   <view class="share">
     <view class="button" bindtap="save">保存到相册</view>
