@@ -190,11 +190,13 @@ Component({
 
       this.drawAvatar()
         .then((canvasId) => {
+          const { pixelRatio } = wx.getSystemInfoSync()
+
           return this.saveTempFile(canvasId, {
             width: this.data.canvas.avatar.width,
             height: this.data.canvas.avatar.width,
-            destWidth: this.data.canvas.avatar.width,
-            destHeight: this.data.canvas.avatar.width,
+            destWidth: this.data.canvas.avatar.width / pixelRatio,
+            destHeight: this.data.canvas.avatar.width / pixelRatio,
           })
         })
         .then(({ tempFilePath }) => {
@@ -283,12 +285,12 @@ Component({
         // draw texts
         ctx.font = `500 21px "Hiragino Sans GB"`
         ctx.fillStyle = '#cc2832'
-        ctx.fillText('圣诞快乐', merryXmasText.left + 2, merryXmasText.top + 20)
-        ctx.fillText('愿世界和平', peaceText.left + 1, peaceText.top + 20)
+        ctx.fillText('圣诞快乐', merryXmasText.left + 3, merryXmasText.top + 20)
+        ctx.fillText('愿世界和平', peaceText.left + 5, peaceText.top + 20)
 
         ctx.font = `500 10px "Hiragino Sans GB"`
         ctx.fillStyle = '#18563b'
-        ctx.fillText('2019', yearText.left + 2, yearText.top + 8)
+        ctx.fillText('2019', yearText.left + 4, yearText.top + 8)
 
         ctx.fillRect(
           dashLeft.left + 3,
@@ -330,8 +332,6 @@ Component({
 
           const canvasAndEditorScale = width / editorSize.width
 
-          const scale = wx.getSystemInfoSync().pixelRatio * canvasAndEditorScale
-
           ctx.drawImage(path, 0, 0, avatarWidth, avatarWidth)
 
           hats.forEach((hat) => {
@@ -353,12 +353,13 @@ Component({
       ctx.translate(-(hat.offset.x + hat.size.width / 2) * scale, -(hat.offset.y + hat.size.height / 2) * scale)
     },
     updateAvatarCanvasSize: function(width) {
+      const { pixelRatio } = wx.getSystemInfoSync()
       this.setData({
         canvas: {
           ...this.data.canvas,
           avatar: {
-            width,
-            height: width,
+            width: width * pixelRatio,
+            height: width * pixelRatio,
           },
         },
       })

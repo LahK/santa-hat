@@ -1,5 +1,5 @@
 // pages/editor/index.js
-import { getHDAvatarUrl } from '../../utils'
+import { getHDAvatarUrl, promisify } from '../../utils'
 
 const app = getApp()
 
@@ -178,5 +178,18 @@ Page({
     this.setData({
       avatarTempFilePath: e.detail,
     })
+  },
+  uploadPhoto: function() {
+    // 已知 Bug：图片名称过长会导致上传之后的临时文件 path 成为非法 src
+    promisify(wx.chooseImage)({
+      count: 1,
+      sizeType: ['original'],
+      sourceType: ['album', 'camera'],
+    })
+      .then((res) => {
+        this.setData({
+          avatarUrl: res.tempFilePaths[0],
+        })
+      })
   },
 })

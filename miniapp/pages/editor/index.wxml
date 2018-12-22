@@ -6,6 +6,11 @@
     <image id="avatar" class="avatar" src="{{avatarUrl}}" bindload="onImageLoad" />
     <EditableImage wx:for="{{hats}}" wx:for-item="hat" wx:key="id" data-id="{{hat.id}}" src="../../assets/hat/{{hat.number}}.png" editorOffset="{{editor.offset}}" bindonchange="onItemChange" bindonremove="onItemRemove"/>
   </view>
+  <div class="helper-text">
+    <text>*由于小程序限制，更新头像后无法即刻同步。你也可以</text>
+    <div class="text-button" bindtap="uploadPhoto">手动上传头像</div>
+    <text>，请将图片裁剪为正方形。</text>
+  </div>
   <div>
     <div class="button auth-button" bindtap="confirm"> 完成了 </div>
   </div>
