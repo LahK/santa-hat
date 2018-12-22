@@ -3,7 +3,11 @@
   <Snow />
   <Snowflakes class="snow-front"/>
 
-  <div class="logo-container"></div>
+  <div class="logo-container">
+      <div class="logo">
+          <div class="logo-hat"></div>
+      </div>
+  </div>
 
   <div class="main-container">
     <div class="scene">
