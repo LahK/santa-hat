@@ -28,14 +28,14 @@ Component({
     avatarTempFilePath: '',
     view: {
       poster: {
-        width: wx.getSystemInfoSync().windowWidth * 0.72,
-        height: wx.getSystemInfoSync().windowWidth * 0.72 * POSTER_RATIO,
+        width: 298,
+        height: 417,
       },
       border: {
         left: 0,
         top: 0,
-        width: wx.getSystemInfoSync().windowWidth * 0.72,
-        height: wx.getSystemInfoSync().windowWidth * 0.72 * POSTER_RATIO,
+        width: 298,
+        height: 417,
       },
       avatar: {
         left: 0,
@@ -84,8 +84,8 @@ Component({
         height: undefined,
       },
       poster: {
-        width: wx.getSystemInfoSync().windowWidth * 0.72 * wx.getSystemInfoSync().pixelRatio,
-        height: wx.getSystemInfoSync().windowWidth * 0.72 * POSTER_RATIO * wx.getSystemInfoSync().pixelRatio,
+        width: 298 * wx.getSystemInfoSync().pixelRatio,
+        height: 417 * wx.getSystemInfoSync().pixelRatio,
         letterSpacing: 2.5,
       },
     },
@@ -306,12 +306,12 @@ Component({
           dashRight.height,
         )
 
-        // this.setData({
-        //   'canvas.poster.letterSpacing': 1,
-        // })
+        this.setData({
+          'canvas.poster.letterSpacing': 1,
+        })
         ctx.font = `8px "Hiragino Sans GB"`
         ctx.fillStyle = '#000000'
-        ctx.fillText('圣诞小帽 · Santa Hat - LahK', metaText.left + 14, metaText.top + 8)
+        ctx.fillText('圣诞小帽 · Santa Hat - LahK', metaText.left, metaText.top + 8)
 
         ctx.draw(true, () => {
           resolve('poster')
