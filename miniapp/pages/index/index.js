@@ -7,6 +7,8 @@ Page({
     authed: undefined,
     userInfo: undefined,
     isNavigating: false,
+    paused: true,
+    isHighlighting: false,
   },
   //事件处理函数
   navigateToEditor: function() {
@@ -19,17 +21,6 @@ Page({
         url: '../editor/index'
       })
     }, 700)
-  },
-  onLoad: function() {
-    const am = wx.getBackgroundAudioManager()
-    am.onEnded(() => {
-      am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
-    })
-    am.title = 'The Christmas Song'
-    am.epname = 'Christmas Songs'
-    am.singer = '手嶌葵'
-    am.coverImgUrl = '../../assets/logo.png'
-    am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
   },
   onShow: function () {
     this.setData({
@@ -60,12 +51,45 @@ Page({
       this.setData({
         authed: true,
         userInfo: app.globalData.userInfo,
+        isHighlighting: true,
       })
-      // this.navigateToEditor()
+      
+      setTimeout(() => {
+        this.setData({
+          isHighlighting: false,
+        })
+      }, 2400)
     } else {
       this.setData({
         authed: false,
       })
     }
+  },
+  playAudio() {
+    const am = wx.getBackgroundAudioManager()
+    if (!am.src) {
+      am.onEnded(() => {
+        am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
+      })
+      am.title = 'The Christmas Song'
+      am.epname = 'Christmas Songs'
+      am.singer = '手嶌葵'
+      am.coverImgUrl = '../../assets/logo.png'
+      am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
+    } else {
+      am.play()
+    }
+
+    this.setData({
+      paused: false,
+    })
+  },
+  pauseAudio() {
+    const am = wx.getBackgroundAudioManager()
+    am.pause()
+
+    this.setData({
+      paused: true,
+    })
   },
 })

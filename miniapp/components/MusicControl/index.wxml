@@ -1,0 +1,8 @@
+<!--components/MusicControl/index.wxml-->
+<div class="music-control">
+  <div class="note-container">
+    <text wx:if="{{shouldShowNote}}" class="note">🎄 点击播放音乐</text>
+  </div>
+  <image wx:if="{{!paused}}" src="../../assets/sound.png" bindtap="pause"/>
+  <image wx:else src="../../assets/mute.png" bindtap="play"/>
+</div>

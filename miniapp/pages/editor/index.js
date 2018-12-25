@@ -30,6 +30,7 @@ Page({
       },
     },
     avatarTempFilePath: undefined,
+    paused: true,
   },
 
   /**
@@ -37,6 +38,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
+      paused: [true, undefined].includes(wx.getBackgroundAudioManager().paused),
       avatarUrl: getHDAvatarUrl(app.globalData.userInfo.avatarUrl),
     })
   },
@@ -191,5 +193,32 @@ Page({
           avatarUrl: res.tempFilePaths[0],
         })
       })
+  },
+  playAudio() {
+    const am = wx.getBackgroundAudioManager()
+    if (!am.src) {
+      am.onEnded(() => {
+        am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
+      })
+      am.title = 'The Christmas Song'
+      am.epname = 'Christmas Songs'
+      am.singer = '手嶌葵'
+      am.coverImgUrl = '../../assets/logo.png'
+      am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
+    } else {
+      am.play()
+    }
+
+    this.setData({
+      paused: false,
+    })
+  },
+  pauseAudio() {
+    const am = wx.getBackgroundAudioManager()
+    am.pause()
+
+    this.setData({
+      paused: true,
+    })
   },
 })

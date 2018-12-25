@@ -1,0 +1,55 @@
+/* components/MusicControl/index.wxss */
+.music-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+  overflow: hidden;
+  opacity: 0.9;
+}
+.music-control .note-container {
+  overflow: hidden;
+  margin-right: 4px;
+  height: 16px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.music-control .note-container .note {
+  position: relative;
+  right: -100%;
+
+  font-size: 8px;
+  line-height: 15px;
+
+  animation: marquee 12s linear infinite;
+}
+.music-control image {
+  height: 16px;
+  width: 16px;
+
+  z-index: 2;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+
+@keyframes marquee {
+  5% {
+    right: -100%;
+  }
+  25% {
+    right: 0;
+  }
+  55% {
+    right: 0;
+  }
+  70% {
+    right: -100%;
+  }
+}

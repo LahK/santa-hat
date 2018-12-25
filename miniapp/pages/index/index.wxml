@@ -1,5 +1,8 @@
 <!--index.wxml-->
 <view class="container {{isNavigating ? 'navigating' : ''}}">
+  <!-- <image class="speech-bubble" src="../../assets/bubble.svg">
+    <text>授权成功，开始添加圣诞小帽吧！</text>
+  </image> -->
   <image class="santa-deer" src="../../assets/santa-deer.png"/>
   <div class="scene">
     <div class="land" />
@@ -9,12 +12,12 @@
   <image class="banner" src="../../assets/banner.png">
     <image class="banner-hat" src="../../assets/hat/4.png" />
   </image>
-  <text class="appreciation">*部分图片素材来自 Freepik, Christmas HQ</text>
+  <text class="appreciation">*部分图片素材来自 Freepik, Icons8, Christmas HQ</text>
   <text class="appreciation">*特别感谢 Weii 的支持</text>
   <text class="copyright">©️ 2018 LahK</text>
   <div class="auth-button-container">
     <button wx:if="{{!authed}}" class="button auth-button {{checkingAuth ? 'disabled' : ''}}" disabled="{{authed === undefined}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权获取头像昵称 </button>
-    <view wx:else class="button auth-button" bindtap="navigateToEditor"> 获取圣诞小帽 </view>
+    <view wx:else class="button auth-button {{isHighlighting ? 'tada' : ''}}" bindtap="navigateToEditor"> 获取圣诞小帽 </view>
   </div>
-  
+  <MusicControl paused="{{paused}}" bindonpause="pauseAudio" bindonplay="playAudio"/>
 </view>

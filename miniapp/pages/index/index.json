@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "Snow": "../../components/Snow/index",
-    "Snowflakes": "../../components/Snowflakes/index"
+    "Snowflakes": "../../components/Snowflakes/index",
+    "MusicControl": "../../components/MusicControl/index"
   },
   "disableScroll": true
 }

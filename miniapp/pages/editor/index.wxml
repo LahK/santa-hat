@@ -2,6 +2,7 @@
 <div class="container">
   <Snow />
   <Snowflakes  class="snow-front"/>
+  <MusicControl paused="{{paused}}" bindonpause="pauseAudio" bindonplay="playAudio"/>
   <view class="editor">
     <image id="avatar" class="avatar" src="{{avatarUrl}}" bindload="onImageLoad" />
     <EditableImage wx:for="{{hats}}" wx:for-item="hat" wx:key="id" data-id="{{hat.id}}" src="../../assets/hat/{{hat.number}}.png" editorOffset="{{editor.offset}}" bindonchange="onItemChange" bindonremove="onItemRemove"/>

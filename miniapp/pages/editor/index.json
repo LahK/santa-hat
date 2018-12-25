@@ -4,7 +4,8 @@
     "Snow": "../../components/Snow/index",
     "Snowflakes": "../../components/Snowflakes/index",
     "Result": "../../components/Result/index",
-    "Card": "../../components/Card/index"
+    "Card": "../../components/Card/index",
+    "MusicControl": "../../components/MusicControl/index"
   },
   "disableScroll": true
 }
