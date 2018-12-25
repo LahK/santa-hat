@@ -40,9 +40,6 @@
 
 
 @keyframes marquee {
-  5% {
-    right: -100%;
-  }
   25% {
     right: 0;
   }
