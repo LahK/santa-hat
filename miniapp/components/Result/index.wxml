@@ -7,7 +7,7 @@
     <image id="qrcode" class="qrcode" src="../../assets/qrcode.jpeg" style="width: {{view.qrcode.width}}px; height: {{view.qrcode.height}}px; top: {{view.qrcode.top}}px; left: {{view.qrcode.left}}px;"/>
     <text id="merryXmasText" class="merryXmasText" style="top: {{view.merryXmasText.top}}px; left: {{view.merryXmasText.left}}px;">圣诞快乐</text>
     <view id="dashLeft" class="dash" style="width: {{view.dashLeft.width}}px; height: {{view.dashLeft.height}}px; top: {{view.dashLeft.top}}px; left: {{view.dashLeft.left}}px;"/>
-    <text id="yearText" class="yearText" style="top: {{view.yearText.top}}px; left: {{view.yearText.left}}px;">2019</text>
+    <text id="yearText" class="yearText" style="top: {{view.yearText.top}}px; left: {{view.yearText.left}}px;">{{posterYear}}</text>
     <view id="dashRight" class="dash" style="width: {{view.dashRight.width}}px; height: {{view.dashRight.height}}px; top: {{view.dashRight.top}}px; left: {{view.dashRight.left}}px;"/>
     <text id="peaceText" class="peaceText" style="top: {{view.peaceText.top}}px; left: {{view.peaceText.left}}px;">愿世界和平</text>
     <!-- <text id="metaText" class="metaText" style="top: {{view.metaText.top}}px; left: {{view.metaText.left}}px;">圣诞小帽 · Santa Hat - Lahk</text> -->

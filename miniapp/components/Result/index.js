@@ -1,5 +1,5 @@
 // components/Result/index.js
-import { promisify, getRandomInt } from '../../utils'
+import { promisify, getRandomInt, getPosterYear } from '../../utils'
 
 Component({
   /**
@@ -21,6 +21,7 @@ Component({
    * Component initial data
    */
   data: {
+    posterYear: getPosterYear(),
     borderImgNumber: getRandomInt(5),
     avatarTempFilePath: '',
     view: {
@@ -290,7 +291,7 @@ Component({
 
         ctx.font = `500 10px "Hiragino Sans GB"`
         ctx.fillStyle = '#18563b'
-        ctx.fillText('2019', yearText.left + 4, yearText.top + 8)
+        ctx.fillText(this.data.posterYear, yearText.left + 4, yearText.top + 8)
 
         ctx.fillRect(
           dashLeft.left + 3,

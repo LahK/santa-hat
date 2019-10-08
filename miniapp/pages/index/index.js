@@ -9,6 +9,7 @@ Page({
     isNavigating: false,
     paused: true,
     isHighlighting: false,
+    currentYear: new Date().getUTCFullYear(),
   },
   //事件处理函数
   navigateToEditor: function() {
@@ -69,13 +70,13 @@ Page({
     const am = wx.getBackgroundAudioManager()
     if (!am.src) {
       am.onEnded(() => {
-        am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
+        am.src = 'cloud://santa-hat.7361-santa-hat/The Christmas Song.mp3'
       })
       am.title = 'The Christmas Song'
       am.epname = 'Christmas Songs'
       am.singer = '手嶌葵'
-      am.coverImgUrl = '../../assets/logo.png'
-      am.src = 'http://pk1i5o4bn.bkt.clouddn.com/UNTITLED_DISC.mp3'
+      am.coverImgUrl = 'https://raw.githubusercontent.com/LahK/santa-hat/master/miniapp/assets/santa-deer.png'
+      am.src = 'cloud://santa-hat.7361-santa-hat/The Christmas Song.mp3'
     } else {
       am.play()
     }

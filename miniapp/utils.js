@@ -21,3 +21,12 @@ export function promisify(api) {
 export function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max)) + 1;
 }
+
+// 每年十二月开始将海报上的年份改为下一年
+export function getPosterYear() {
+  const now = new Date();
+  const currentMonth = now.getUTCMonth();
+  const currentYear = now.getUTCFullYear();
+
+  return currentMonth > 10 ? currentYear + 1 : currentYear;
+}
