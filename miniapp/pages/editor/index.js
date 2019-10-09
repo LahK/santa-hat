@@ -1,5 +1,10 @@
 // pages/editor/index.js
-import { getHDAvatarUrl, promisify } from '../../utils'
+// import cloud from 'wx-server-sdk'
+
+import {
+  getHDAvatarUrl,
+  promisify
+} from '../../utils'
 
 const app = getApp()
 
@@ -16,7 +21,10 @@ Page({
    */
   data: {
     avatarUrl: undefined,
-    availableHats: Array.from({ length: 32 }, (v, k) => k + 1),
+    avatarLoaded: false,
+    availableHats: Array.from({
+      length: 32
+    }, (v, k) => k + 1),
     hats: [],
     isSaving: false,
     editor: {
@@ -31,26 +39,30 @@ Page({
     },
     avatarTempFilePath: undefined,
     paused: true,
+    authed: undefined,
   },
 
   /**
    * Lifecycle function--Called when page load
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.setData({
       paused: [true, undefined].includes(wx.getBackgroundAudioManager().paused),
-      avatarUrl: getHDAvatarUrl(app.globalData.userInfo.avatarUrl),
+      avatarUrl: this.getDefaultAvatarUrl(),
+      avatarLoaded: false,
     })
   },
 
   /**
    * Lifecycle function--Called when page is initially rendered
    */
-  onReady: function () {
-    wx.showLoading({
-      title: '加载头像中……',
-    })
-    wx.createSelectorQuery().select('.editor').boundingClientRect(({ left, top, width, height }) => {
+  onReady: function() {
+    wx.createSelectorQuery().select('.editor').boundingClientRect(({
+      left,
+      top,
+      width,
+      height
+    }) => {
       this.setData({
         editor: {
           offset: {
@@ -59,7 +71,7 @@ Page({
           },
           size: {
             width,
-            height, 
+            height,
           },
         },
       })
@@ -69,7 +81,7 @@ Page({
   /**
    * Lifecycle function--Called when page show
    */
-  onShow: function () {
+  onShow: function() {
     wx.getSetting({
       success: (res) => {
         if (res.authSetting['scope.userInfo']) {
@@ -93,49 +105,72 @@ Page({
   /**
    * Lifecycle function--Called when page hide
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * Lifecycle function--Called when page unload
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * Page event handler function--Called when user drop down
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * Called when page reach bottom
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * Called when user click on the top right corner to share
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
     return {
       title: '要不要也来个圣诞小帽？',
       path: '/pages/index/index',
       imageUrl: this.data.avatarTempFilePath,
     }
   },
-  onImageLoad: function(e) {
-    wx.hideLoading()
+
+
+  getUserInfo: function (e) {
+    if (e.errMsg === 'getUserInfo:ok' || e.detail.errMsg === 'getUserInfo:ok') {
+      app.globalData.userInfo = e.userInfo || e.detail.userInfo
+      this.setData({
+        authed: true,
+        userInfo: app.globalData.userInfo,
+        avatarUrl: this.getDefaultAvatarUrl(),
+        avatarLoaded: false,
+      })
+    } else {
+      this.setData({
+        authed: false,
+      })
+    }
   },
+
+  onAvatarLoaded: function(e) {
+    this.setData({
+      avatarLoaded: true,
+    })
+  },
+
   onTapItem: function(e) {
-    const { number } = e.currentTarget.dataset
+    const {
+      number
+    } = e.currentTarget.dataset
     this.setData({
       hats: [
-        ...this.data.hats, 
+        ...this.data.hats,
         {
           number,
           id: newUuid(),
@@ -143,8 +178,13 @@ Page({
       ],
     })
   },
-  onItemChange: function ({ detail, currentTarget }) {
-    const { id } = currentTarget.dataset
+  onItemChange: function({
+    detail,
+    currentTarget
+  }) {
+    const {
+      id
+    } = currentTarget.dataset
     const hats = this.data.hats
     const index = hats.findIndex((hat) => hat.id === id);
 
@@ -159,8 +199,12 @@ Page({
       })
     }
   },
-  onItemRemove: function({ currentTarget }) {
-    const { id } = currentTarget.dataset
+  onItemRemove: function({
+    currentTarget
+  }) {
+    const {
+      id
+    } = currentTarget.dataset
 
     this.setData({
       hats: this.data.hats.filter((hat) => hat.id !== id),
@@ -171,28 +215,74 @@ Page({
       isSaving: true,
     })
   },
-  closeConfirmDialog: function () {
+  closeConfirmDialog: function() {
     this.setData({
       isSaving: false,
     })
   },
-  updateAvatarTempFilePath: function (e) {
+  updateAvatarTempFilePath: function(e) {
     this.setData({
       avatarTempFilePath: e.detail,
     })
   },
-  uploadPhoto: function() {
+  uploadPhoto: function () {
     // 已知 Bug：图片名称过长会导致上传之后的临时文件 path 成为非法 src
     promisify(wx.chooseImage)({
-      count: 1,
-      sizeType: ['original'],
-      sourceType: ['album', 'camera'],
-    })
+        count: 1,
+        sizeType: ['original'],
+        sourceType: ['album', 'camera'],
+      })
       .then((res) => {
+        wx.showLoading({
+          title: '图片校验中……',
+          mask: true,
+        })
+        const path = res.tempFilePaths[0];
         this.setData({
-          avatarUrl: res.tempFilePaths[0],
+          avatarUrl: path,
+          avatarLoaded: false,
+        })
+        return path;
+      })
+      .then((path) => {
+        return promisify(wx.cloud.uploadFile)({
+          cloudPath: path.split("http://")[1], // 上传至云端的路径
+          filePath: path, // 小程序临时文件路径
         })
       })
+      .then((res) => {
+        const parts = this.data.avatarUrl.split('.')
+        const type = parts[parts.length - 1];
+
+        return wx.cloud.callFunction({
+          name: 'imgSecCheck',
+          data: {
+            fileID: res.fileID,
+            type: `image/${type}`,
+          },
+        })
+      })
+      .then((res) => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '校验成功！',
+        })
+      })
+      .catch((err) => {
+        console.error(err)
+        this.setData({
+          avatarUrl: this.getDefaultAvatarUrl(),
+          avatarLoaded: false,
+        })
+        wx.hideLoading()
+        wx.showToast({
+          title: '校验失败，请更换头像图片！',
+          icon: "none"
+        })
+      })
+  },
+  getDefaultAvatarUrl() {
+    return app.globalData.userInfo ? getHDAvatarUrl(app.globalData.userInfo.avatarUrl) : undefined
   },
   playAudio() {
     const am = wx.getBackgroundAudioManager()

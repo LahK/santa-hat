@@ -16,8 +16,8 @@
   <text class="appreciation">*特别感谢 Weii 的支持</text>
   <text class="copyright">©️ {{currentYear}} LahK</text>
   <div class="auth-button-container">
-    <button wx:if="{{!authed}}" class="button auth-button {{checkingAuth ? 'disabled' : ''}}" disabled="{{authed === undefined}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权获取头像昵称 </button>
-    <view wx:else class="button auth-button {{isHighlighting ? 'tada' : ''}}" bindtap="navigateToEditor"> 获取圣诞小帽 </view>
+    <!-- <button wx:if="{{!authed}}" class="button auth-button {{checkingAuth ? 'disabled' : ''}}" disabled="{{authed === undefined}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权获取头像昵称 </button> -->
+    <view class="button auth-button {{isHighlighting ? 'tada' : ''}}" bindtap="navigateToEditor"> 获取圣诞小帽 </view>
   </div>
   <MusicControl paused="{{paused}}" bindonpause="pauseAudio" bindonplay="playAudio"/>
 </view>

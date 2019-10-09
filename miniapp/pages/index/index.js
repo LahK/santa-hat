@@ -4,8 +4,6 @@ const app = getApp()
 
 Page({
   data: {
-    authed: undefined,
-    userInfo: undefined,
     isNavigating: false,
     paused: true,
     isHighlighting: false,
@@ -26,7 +24,14 @@ Page({
   onShow: function () {
     this.setData({
       isNavigating: false,
+      isHighlighting: true,
     })
+
+    setTimeout(() => {
+      this.setData({
+        isHighlighting: false,
+      })
+    }, 2400)
     wx.getSetting({
       success: (res) => {
         if (res.authSetting['scope.userInfo']) {
@@ -45,26 +50,6 @@ Page({
         })
       },
     })
-  },
-  getUserInfo: function(e) {
-    if (e.errMsg === 'getUserInfo:ok' || e.detail.errMsg === 'getUserInfo:ok') {
-      app.globalData.userInfo = e.userInfo || e.detail.userInfo
-      this.setData({
-        authed: true,
-        userInfo: app.globalData.userInfo,
-        isHighlighting: true,
-      })
-      
-      setTimeout(() => {
-        this.setData({
-          isHighlighting: false,
-        })
-      }, 2400)
-    } else {
-      this.setData({
-        authed: false,
-      })
-    }
   },
   playAudio() {
     const am = wx.getBackgroundAudioManager()

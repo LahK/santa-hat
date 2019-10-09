@@ -4,16 +4,26 @@
   <Snowflakes  class="snow-front"/>
   <MusicControl paused="{{paused}}" bindonpause="pauseAudio" bindonplay="playAudio"/>
   <view class="editor">
-    <image id="avatar" class="avatar" src="{{avatarUrl}}" bindload="onImageLoad" />
+    <image id="avatar" class="avatar" src="{{avatarUrl}}" bindload="onAvatarLoaded"/>
     <EditableImage wx:for="{{hats}}" wx:for-item="hat" wx:key="id" data-id="{{hat.id}}" src="../../assets/hat/{{hat.number}}.png" editorOffset="{{editor.offset}}" bindonchange="onItemChange" bindonremove="onItemRemove"/>
+    <view wx:if="{{!authed && !avatarLoaded}}" class="placeholder">
+      <button wx:if="{{authed === false}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击授权获取当前头像 </button>
+      <text wx:else>加载中……</text>
+    </view>
+    <view wx:if="{{authed && !avatarLoaded}}" class="placeholder">
+      <text>加载中……</text>
+    </view>
   </view>
+  <div class="helper-text" wx:if="{{authed === false && !!avatarUrl}}">
+    <view>*<button open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权给圣诞小帽 </button>以自动获取当前头像。</view>
+  </div>
   <div class="helper-text">
     <text>*由于小程序限制，更新头像后无法即刻同步。你也可以</text>
     <div class="text-button" bindtap="uploadPhoto">手动上传头像</div>
     <text>，请将图片裁剪为正方形。</text>
   </div>
   <div>
-    <div class="button auth-button" bindtap="confirm"> 完成了 </div>
+    <button class="button auth-button" bindtap="confirm" disabled="{{!avatarUrl}}"> 完成了 </button>
   </div>
   <div class="picker">
     <text>选择你的圣诞小帽：</text>

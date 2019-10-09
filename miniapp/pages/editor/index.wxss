@@ -48,7 +48,7 @@
   align-items: center;
   position: relative;
 
-  background-color: #eee;
+  background-color: rgba(255,255,255,.4);
   box-shadow: 0 1px 1px rgba(0,0,0,0.15),  0 10px 0 -5px #eee,  0 10px 1px -4px rgba(0,0,0,0.15), 0 20px 0 -10px #eee, 0 20px 1px -9px rgba(0,0,0,0.15);
 
   /* box-shadow: 0 1px 1px rgba(0,0,0,0.15), 5px 5px 0 0 #eee, 5px 5px 1px 1px rgba(0,0,0,0.15), 10px 11px 0 0 #eee, 10px 11px 1px 1px rgba(0,0,0,0.15); */
@@ -64,6 +64,17 @@
   color: black;
   text-align: left;
   font-size: 8px;
+}
+.helper-text view button {
+  text-decoration: underline;
+  font-size: 8px;
+  display: inline-block;
+  background-color: transparent;
+  padding: 0 !important;
+  margin: 0 4px 0 0 !important;
+  line-height: 1;
+  overflow: unset;
+  border-radius: unset;
 }
 .helper-text, .helper-text text {
   letter-spacing: 1px;
@@ -158,4 +169,25 @@ MusicControl {
 
 MusicControl text {
   letter-spacing: unset;
+}
+
+.placeholder {
+  position: absolute;
+  margin: 0 auto;
+  text-decoration: underline;
+  font-size: 0.8em;
+}
+
+.placeholder:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.placeholder text {
+  font-size: 0.8em;
+}
+
+.placeholder button {
+  background-color: transparent;
+  font-size: 0.8em;
 }
