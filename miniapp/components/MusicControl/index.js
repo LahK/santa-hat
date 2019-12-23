@@ -8,6 +8,10 @@ Component({
       type: Boolean,
       default: true,
     },
+    darkmode: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   /**
@@ -19,7 +23,6 @@ Component({
 
   ready() {
     const shouldShowNote = this.properties.paused
-    console.log(this.properties)
     this.setData({
       shouldShowNote,
     })
@@ -30,7 +33,7 @@ Component({
           shouldShowNote: false,
         })
       }
-    }, 36000)
+    }, 72000)
   },
   /**
    * Component methods

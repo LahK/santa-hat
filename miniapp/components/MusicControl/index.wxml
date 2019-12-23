@@ -1,5 +1,5 @@
 <!--components/MusicControl/index.wxml-->
-<div class="music-control">
+<div class="music-control {{darkmode ? 'darkmode' : ''}}">
   <div class="note-container">
     <text wx:if="{{shouldShowNote}}" class="note">🎄 点击播放音乐</text>
   </div>

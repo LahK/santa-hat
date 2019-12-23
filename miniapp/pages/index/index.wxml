@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container {{isNavigating ? 'navigating' : ''}}">
+<view class="container {{isNavigating ? 'navigating' : ''}} {{darkmode ? 'darkmode' : ''}}">
   <!-- <image class="speech-bubble" src="../../assets/bubble.svg">
     <text>授权成功，开始添加圣诞小帽吧！</text>
   </image> -->

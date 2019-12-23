@@ -2,13 +2,16 @@
 .container {
   width: 100vw;
   height: 100vh;
-  /* background-color: #D9EBFF; */
   background-color: #BEDBFF;
-  /* background-color:#AF3B49; */
 
   display: flex;
   justify-content: space-between;
 }
+
+.container.darkmode {
+  background-color: #222d5a;
+}
+
 .santa-hat {
   position: absolute;
   top: 0;
@@ -190,4 +193,19 @@ MusicControl text {
 .placeholder button {
   background-color: transparent;
   font-size: 0.8em;
+}
+
+.container.darkmode > .editor > .placeholder,
+.container.darkmode > .editor > .placeholder > button,
+.container.darkmode > .editor > .placeholder > text,
+.container.darkmode > .helper-text > view,
+.container.darkmode > .helper-text > button,
+.container.darkmode > .helper-text > text,
+.container.darkmode > .picker > text {
+  color: white;
+  text-decoration-color: white;
+}
+
+.container.darkmode > .picker > .list > view {
+  background-color: unset;
 }

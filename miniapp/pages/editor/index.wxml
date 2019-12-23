@@ -1,37 +1,37 @@
 <!--pages/editor/index.wxml-->
-<div class="container">
+<view class="container {{darkmode ? 'darkmode' : ''}}">
   <Snow />
-  <Snowflakes  class="snow-front"/>
-  <MusicControl paused="{{paused}}" bindonpause="pauseAudio" bindonplay="playAudio"/>
+  <Snowflakes class="snow-front"/>
+  <MusicControl darkmode="{{darkmode}}" paused="{{paused}}" bindonpause="pauseAudio" bindonplay="playAudio"/>
   <view class="editor">
     <image id="avatar" class="avatar" src="{{avatarUrl}}" bindload="onAvatarLoaded"/>
     <EditableImage wx:for="{{hats}}" wx:for-item="hat" wx:key="id" data-id="{{hat.id}}" src="../../assets/hat/{{hat.number}}.png" editorOffset="{{editor.offset}}" bindonchange="onItemChange" bindonremove="onItemRemove"/>
-    <view wx:if="{{!authed && !avatarLoaded}}" class="placeholder">
-      <button wx:if="{{authed === false}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击授权获取当前头像 </button>
-      <text wx:else>加载中……</text>
+    <view wx:if="{{!authed && !avatarLoaded}}" class="placeholder {{darkmode ? 'darkmode' : ''}}">
+      <button wx:if="{{authed === false}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="{{darkmode ? 'darkmode' : ''}}"> 点击授权获取当前头像 </button>
+      <text wx:else class="{{darkmode ? 'darkmode' : ''}}">加载中……</text>
     </view>
     <view wx:if="{{authed && !avatarLoaded}}" class="placeholder">
-      <text>加载中……</text>
+      <text class="{{darkmode ? 'darkmode' : ''}}">加载中……</text>
     </view>
   </view>
-  <div class="helper-text" wx:if="{{authed === false && !!avatarUrl}}">
-    <view>*<button open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权给圣诞小帽 </button>以自动获取当前头像。</view>
-  </div>
-  <div class="helper-text">
-    <text>*由于小程序限制，更新头像后无法即刻同步。你也可以</text>
-    <div class="text-button" bindtap="uploadPhoto">手动上传头像</div>
-    <text>，请将图片裁剪为正方形。</text>
-  </div>
-  <div>
+  <view class="helper-text" wx:if="{{authed === false && !!avatarUrl}}">
+    <view class="{{darkmode ? 'darkmode' : ''}}">*<button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="{{darkmode ? 'darkmode' : ''}}">授权给圣诞小帽 </button>以自动获取当前头像。</view>
+  </view>
+  <view class="helper-text">
+    <text class="{{darkmode ? 'darkmode' : ''}}">*由于小程序限制，更新头像后无法即刻同步。你也可以</text>
+    <text class="text-button {{darkmode ? 'darkmode' : ''}}" bindtap="uploadPhoto">手动上传头像</text>
+    <text class="{{darkmode ? 'darkmode' : ''}}">，请将图片裁剪为正方形。</text>
+  </view>
+  <view>
     <button class="button auth-button" bindtap="confirm" disabled="{{!avatarUrl}}"> 完成了 </button>
-  </div>
-  <div class="picker">
-    <text>选择你的圣诞小帽：</text>
-    <div class="list">
-      <div class="item" wx:for="{{availableHats}}" wx:for-item="number" wx:key="index" bindtap="onTapItem" data-number="{{number}}">
+  </view>
+  <view class="picker">
+    <text class="{{darkmode ? 'darkmode' : ''}}">选择你的圣诞小帽：</text>
+    <view class="list">
+      <view class="item" wx:for="{{availableHats}}" wx:for-item="number" wx:key="index" bindtap="onTapItem" data-number="{{number}}">
         <image src="../../assets/hat/{{number}}.png" mode="aspectFit"/>
-      </div>
-    </div>
-  </div>
+      </view>
+    </view>
+  </view>
   <Result wx:if="{{isSaving}}" hats="{{hats}}" avatarUrl="{{avatarUrl}}" editorSize="{{editor.size}}" bindonclose="closeConfirmDialog" bindonavatarsave="updateAvatarTempFilePath"/>
-</div>
+</view>

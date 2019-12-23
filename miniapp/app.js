@@ -1,4 +1,10 @@
 //app.js
+
+function shouldEnableDarkmode() {
+  const h = (new Date()).getHours();
+  return h >= 18 || h < 6
+}
+
 App({
   onLaunch: function() {
     wx.cloud.init({
@@ -38,6 +44,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
-  }
+    userInfo: null,
+    darkmode: shouldEnableDarkmode(),
+  },
 })

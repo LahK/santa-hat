@@ -50,3 +50,11 @@
     right: -100%;
   }
 }
+
+.music-control.darkmode .note {
+  color: white;
+}
+
+.music-control.darkmode image {
+  filter: brightness(0) invert(1);
+}

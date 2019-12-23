@@ -40,6 +40,7 @@ Page({
     avatarTempFilePath: undefined,
     paused: true,
     authed: undefined,
+    darkmode: app.globalData.darkmode,
   },
 
   /**
@@ -142,7 +143,7 @@ Page({
   },
 
 
-  getUserInfo: function (e) {
+  getUserInfo: function(e) {
     if (e.errMsg === 'getUserInfo:ok' || e.detail.errMsg === 'getUserInfo:ok') {
       app.globalData.userInfo = e.userInfo || e.detail.userInfo
       this.setData({
@@ -165,6 +166,14 @@ Page({
   },
 
   onTapItem: function(e) {
+    if (!this.data.avatarUrl) {
+      wx.showToast({
+        title: '请先上传头像',
+        icon: 'none'
+      })
+      return
+    }
+
     const {
       number
     } = e.currentTarget.dataset
@@ -225,7 +234,7 @@ Page({
       avatarTempFilePath: e.detail,
     })
   },
-  uploadPhoto: function () {
+  uploadPhoto: function() {
     // 已知 Bug：图片名称过长会导致上传之后的临时文件 path 成为非法 src
     promisify(wx.chooseImage)({
         count: 1,
@@ -246,7 +255,7 @@ Page({
       })
       .then((path) => {
         return promisify(wx.cloud.uploadFile)({
-          cloudPath: path.split("http://")[1], // 上传至云端的路径
+          cloudPath: path.split("://")[1], // 上传至云端的路径
           filePath: path, // 小程序临时文件路径
         })
       })
@@ -270,11 +279,17 @@ Page({
       })
       .catch((err) => {
         console.error(err)
+
         this.setData({
           avatarUrl: this.getDefaultAvatarUrl(),
           avatarLoaded: false,
         })
         wx.hideLoading()
+        
+        if (err.errMsg === "chooseImage:fail cancel") {
+          return;
+        }
+
         wx.showToast({
           title: '校验失败，请更换头像图片！',
           icon: "none"
@@ -288,13 +303,13 @@ Page({
     const am = wx.getBackgroundAudioManager()
     if (!am.src) {
       am.onEnded(() => {
-        am.src = 'cloud://santa-hat.7361-santa-hat/The Christmas Song.mp3'
+        am.src = 'https://7361-santa-hat-1300390218.tcb.qcloud.la/The%20Christmas%20Song.mp3?sign=44c9700da2268df8ac35382c816cf834&t=1576668897'
       })
       am.title = 'The Christmas Song'
       am.epname = 'Christmas Songs'
       am.singer = '手嶌葵'
       am.coverImgUrl = 'https://raw.githubusercontent.com/LahK/santa-hat/master/miniapp/assets/santa-deer.png'
-      am.src = 'cloud://santa-hat.7361-santa-hat/The Christmas Song.mp3'
+      am.src = 'https://7361-santa-hat-1300390218.tcb.qcloud.la/The%20Christmas%20Song.mp3?sign=44c9700da2268df8ac35382c816cf834&t=1576668897'
     } else {
       am.play()
     }
