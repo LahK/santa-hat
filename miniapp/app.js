@@ -45,6 +45,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    darkmode: shouldEnableDarkmode(),
+    darkmode: false,
   },
 })

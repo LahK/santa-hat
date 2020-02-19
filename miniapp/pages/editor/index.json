@@ -5,6 +5,7 @@
     "Snowflakes": "../../components/Snowflakes/index",
     "Result": "../../components/Result/index",
     "Card": "../../components/Card/index",
+    "Controls": "../../components/Controls/index",
     "MusicControl": "../../components/MusicControl/index"
   },
   "disableScroll": true

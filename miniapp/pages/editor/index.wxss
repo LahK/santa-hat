@@ -195,6 +195,15 @@ MusicControl text {
   font-size: 0.8em;
 }
 
+.toolbar {
+  position: relative;
+}
+
+.toolbar .controls {
+  position: absolute;
+  right: 16px;
+}
+
 .container.darkmode > .editor > .placeholder,
 .container.darkmode > .editor > .placeholder > button,
 .container.darkmode > .editor > .placeholder > text,

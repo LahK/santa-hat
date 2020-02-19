@@ -1,0 +1,42 @@
+/* components/Controls/index.wxss */
+.controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls .controls__direction__up-and-down {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls .controls__direction--up {
+  transform: rotate(90deg);
+  width: 16px;
+  height: 16px;
+}
+
+.controls .controls__direction--down {
+  transform: rotate(-90deg);
+  width: 16px;
+  height: 16px;
+}
+
+.controls .controls__direction--left {
+  width: 16px;
+  height: 16px;
+}
+
+.controls .controls__direction--right {
+  transform: rotate(180deg);
+  width: 16px;
+  height: 16px;
+}
+
+.controls .controls__rotate {
+  width: 16px;
+  height: 16px;
+}

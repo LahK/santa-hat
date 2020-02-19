@@ -245,6 +245,10 @@ Component({
     },
     drawPoster: function() {
       return new Promise((resolve, reject) => {
+        wx.showLoading({
+          title: '绘制海报中……',
+          mask: true,
+        })
         const { poster, border, avatar, qrcode, merryXmasText, yearText, peaceText, metaText, dashLeft, dashRight } = this.data.view
 
         const { pixelRatio } = wx.getSystemInfoSync()
@@ -320,11 +324,17 @@ Component({
     },
     drawAvatar: function() {
       return new Promise((resolve, reject) => {
+        wx.showLoading({
+          title: '绘制头像中……',
+          mask: true,
+        })
         const { avatarUrl, hats, editorSize } = this.properties
 
         promisify(wx.getImageInfo)({
           src: avatarUrl,
-        }).then(({ width, path }) => {
+        }).then((res) => {
+          const { width, path } = res;
+          console.log(res)
           this.updateAvatarCanvasSize(width)
           
           const ctx = wx.createCanvasContext('avatar', this)
@@ -336,7 +346,11 @@ Component({
 
           ctx.drawImage(path, 0, 0, avatarWidth, avatarWidth)
 
-          hats.forEach((hat) => {
+          hats.forEach((hat, idx) => {
+            wx.showLoading({
+              title: `绘制圣诞小帽${idx+1}中……`,
+              mask: true,
+            })
             this.drawHat(ctx, hat, canvasAndEditorScale * pixelRatio)
           })
 

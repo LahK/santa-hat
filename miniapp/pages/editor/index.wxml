@@ -22,8 +22,9 @@
     <text class="text-button {{darkmode ? 'darkmode' : ''}}" bindtap="uploadPhoto">手动上传头像</text>
     <text class="{{darkmode ? 'darkmode' : ''}}">，请将图片裁剪为正方形。</text>
   </view>
-  <view>
+  <view class="toolbar">
     <button class="button auth-button" bindtap="confirm" disabled="{{!avatarUrl}}"> 完成了 </button>
+    <Controls class="toolbar__controls"/>
   </view>
   <view class="picker">
     <text class="{{darkmode ? 'darkmode' : ''}}">选择你的圣诞小帽：</text>

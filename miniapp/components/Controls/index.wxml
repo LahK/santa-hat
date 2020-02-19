@@ -1,0 +1,10 @@
+<!--components/Controls/index.wxml-->
+<view class="controls">
+  <image class="controls__direction--left" src="../../assets/left.png"></image>
+  <view class="controls__direction__up-and-down">
+    <image class="controls__direction--up" src="../../assets/left.png"></image>
+    <image class="controls__direction--down" src="../../assets/left.png"></image>
+  </view>
+  <image class="controls__direction--right" src="../../assets/left.png"></image>
+  <image class="controls__rotate" src="../../assets/rotate-white.png"></image>
+</view>
