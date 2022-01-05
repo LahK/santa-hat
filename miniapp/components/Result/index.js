@@ -192,7 +192,6 @@ Component({
       this.drawAvatar()
         .then((canvasId) => {
           const { pixelRatio } = wx.getSystemInfoSync()
-
           return this.saveTempFile(canvasId, {
             width: this.data.canvas.avatar.width,
             height: this.data.canvas.avatar.width,
@@ -334,7 +333,6 @@ Component({
           src: avatarUrl,
         }).then((res) => {
           const { width, path } = res;
-          console.log(res)
           this.updateAvatarCanvasSize(width)
           
           const ctx = wx.createCanvasContext('avatar', this)
@@ -357,7 +355,10 @@ Component({
           ctx.draw(true, () => {
             resolve('avatar')
           })
-        }).catch((error) => reject(error))
+        }).catch((error) => {
+          console.error(error)
+          reject(error)
+        })
       })
     },
     drawHat: function (ctx, hat, scale = 1) {

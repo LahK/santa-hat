@@ -39,7 +39,7 @@ Page({
     },
     avatarTempFilePath: undefined,
     paused: true,
-    authed: undefined,
+    authed: false,
     darkmode: app.globalData.darkmode,
   },
 
@@ -49,7 +49,6 @@ Page({
   onLoad: function(options) {
     this.setData({
       paused: [true, undefined].includes(wx.getBackgroundAudioManager().paused),
-      avatarUrl: this.getDefaultAvatarUrl(),
       avatarLoaded: false,
     })
   },
@@ -83,24 +82,24 @@ Page({
    * Lifecycle function--Called when page show
    */
   onShow: function() {
-    wx.getSetting({
-      success: (res) => {
-        if (res.authSetting['scope.userInfo']) {
-          this.setData({
-            authed: true,
-          })
-        } else {
-          this.setData({
-            authed: false,
-          })
-        }
-      },
-      fail: () => {
-        this.setData({
-          authed: false,
-        })
-      },
-    })
+    // wx.getSetting({
+    //   success: (res) => {
+    //     if (res.authSetting['scope.userInfo']) {
+    //       this.setData({
+    //         authed: true,
+    //       })
+    //     } else {
+    //       this.setData({
+    //         authed: false,
+    //       })
+    //     }
+    //   },
+    //   fail: (e) => {
+    //     this.setData({
+    //       authed: false,
+    //     })
+    //   },
+    // })
   },
 
   /**
@@ -143,20 +142,24 @@ Page({
   },
 
 
-  getUserInfo: function(e) {
-    if (e.errMsg === 'getUserInfo:ok' || e.detail.errMsg === 'getUserInfo:ok') {
-      app.globalData.userInfo = e.userInfo || e.detail.userInfo
-      this.setData({
-        authed: true,
-        userInfo: app.globalData.userInfo,
-        avatarUrl: this.getDefaultAvatarUrl(),
-        avatarLoaded: false,
-      })
-    } else {
-      this.setData({
-        authed: false,
-      })
-    }
+  getUserProfile: function(e) {
+    wx.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        this.setData({
+          authed: true,
+          userInfo: res.userInfo,
+          avatarUrl: this.getDefaultAvatarUrl(res.userInfo),
+          avatarLoaded: false,
+        })
+      },
+      fail: (e) => {
+        console.error(e);
+        this.setData({
+          authed: false,
+        })
+      }
+    })
   },
 
   onAvatarLoaded: function(e) {
@@ -281,7 +284,7 @@ Page({
         console.error(err)
 
         this.setData({
-          avatarUrl: this.getDefaultAvatarUrl(),
+          avatarUrl: undefined,
           avatarLoaded: false,
         })
         wx.hideLoading()
@@ -296,8 +299,8 @@ Page({
         })
       })
   },
-  getDefaultAvatarUrl() {
-    return app.globalData.userInfo ? getHDAvatarUrl(app.globalData.userInfo.avatarUrl) : undefined
+  getDefaultAvatarUrl(userInfo) {
+    return userInfo ? getHDAvatarUrl(userInfo.avatarUrl) : undefined
   },
   playAudio() {
     const am = wx.getBackgroundAudioManager()

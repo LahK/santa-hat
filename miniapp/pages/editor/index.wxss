@@ -197,6 +197,10 @@ MusicControl text {
 
 .toolbar {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .toolbar .controls {

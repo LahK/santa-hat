@@ -7,15 +7,12 @@
     <image id="avatar" class="avatar" src="{{avatarUrl}}" bindload="onAvatarLoaded"/>
     <EditableImage wx:for="{{hats}}" wx:for-item="hat" wx:key="id" data-id="{{hat.id}}" src="../../assets/hat/{{hat.number}}.png" editorOffset="{{editor.offset}}" bindonchange="onItemChange" bindonremove="onItemRemove"/>
     <view wx:if="{{!authed && !avatarLoaded}}" class="placeholder {{darkmode ? 'darkmode' : ''}}">
-      <button wx:if="{{authed === false}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="{{darkmode ? 'darkmode' : ''}}"> 点击授权获取当前头像 </button>
+      <button wx:if="{{authed === false}}" bindtap="getUserProfile" class="{{darkmode ? 'darkmode' : ''}}"> 点击授权获取当前头像 </button>
       <text wx:else class="{{darkmode ? 'darkmode' : ''}}">加载中……</text>
     </view>
     <view wx:if="{{authed && !avatarLoaded}}" class="placeholder">
       <text class="{{darkmode ? 'darkmode' : ''}}">加载中……</text>
     </view>
-  </view>
-  <view class="helper-text" wx:if="{{authed === false && !!avatarUrl}}">
-    <view class="{{darkmode ? 'darkmode' : ''}}">*<button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="{{darkmode ? 'darkmode' : ''}}">授权给圣诞小帽 </button>以自动获取当前头像。</view>
   </view>
   <view class="helper-text">
     <text class="{{darkmode ? 'darkmode' : ''}}">*由于小程序限制，更新头像后无法即刻同步。你也可以</text>
@@ -24,7 +21,7 @@
   </view>
   <view class="toolbar">
     <button class="button auth-button" bindtap="confirm" disabled="{{!avatarUrl}}"> 完成了 </button>
-    <Controls class="toolbar__controls"/>
+    <!-- <Controls class="toolbar__controls"/> -->
   </view>
   <view class="picker">
     <text class="{{darkmode ? 'darkmode' : ''}}">选择你的圣诞小帽：</text>
